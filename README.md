@@ -6,16 +6,16 @@ Este archivo es el índice vivo del repositorio. Si una persona llega por primer
 
 ## Estado actual
 
-| Campo | Estado |
-| --- | --- |
-| Fase | Entrega 0 — Descubrimiento y preparación |
-| Última tarea terminada | Tarea 0.3 — Crear documentación inicial |
-| Tarea en curso | Ninguna; la siguiente tarea está bloqueada por el entorno |
-| Próxima tarea | Resolver Node.js e iniciar la Tarea 1.1 — Crear proyecto React + TypeScript + Vite |
-| Código funcional | Aún no creado |
-| Repositorio remoto | Aún no creado ni vinculado |
-| Despliegue | Aún no realizado |
-| Bloqueo conocido | Node.js y npm no están disponibles en el `PATH` |
+| Campo                  | Estado                                                      |
+| ---------------------- | ----------------------------------------------------------- |
+| Fase                   | Entrega 1 — Base funcional local                            |
+| Última tarea terminada | Tarea 1.1 — Crear proyecto React + TypeScript + Vite        |
+| Tarea en curso         | Ninguna; la siguiente comienza después del commit de cierre |
+| Próxima tarea          | Tarea 1.2 — Crear repositorio GitHub público                |
+| Código funcional       | Portada técnica local validada                              |
+| Repositorio remoto     | Aún no creado ni vinculado                                  |
+| Despliegue             | Aún no realizado                                            |
+| Bloqueo conocido       | Ninguno                                                     |
 
 El detalle y la bitácora se mantienen en [`docs/STATUS.md`](docs/STATUS.md).
 
@@ -23,12 +23,18 @@ El detalle y la bitácora se mantienen en [`docs/STATUS.md`](docs/STATUS.md).
 
 ```text
 .
+├── .editorconfig                # Convenciones básicas de editores
 ├── .env.example                 # Variables públicas requeridas, sin secretos
 ├── .gitignore                   # Exclusiones de Git y protección de secretos
+├── .npmrc                       # Instalación estricta y versiones exactas
+├── .nvmrc                       # Línea Node.js 24 LTS
+├── .oxlintrc.json               # Reglas de lint para React y TypeScript
+├── .prettierignore              # Exclusiones del formateador
+├── .prettierrc.json             # Estilo de formato compartido
 ├── AGENTS.md                    # Reglas persistentes para agentes y colaboradores
 ├── PROJECT.md                   # Contexto ejecutivo, alcance y arquitectura
 ├── README.md                    # Índice principal y guía de entrada
-└── docs/
+├── docs/
     ├── ACTION_PLAN.md           # Plan secuencial y estado por tarea
     ├── DATA_MODEL.md            # Modelo conceptual e invariantes financieras
     ├── DECISIONS.md             # Decisiones tomadas y asuntos pendientes
@@ -38,6 +44,22 @@ El detalle y la bitácora se mantienen en [`docs/STATUS.md`](docs/STATUS.md).
     ├── STATUS.md                # Bitácora, relevo y siguiente acción
     ├── TEST_PLAN.md             # Estrategia y casos de prueba obligatorios
     └── WORKFLOW.md              # Flujo Git y colaboración entre programadores
+├── index.html                   # Documento raíz de la SPA
+├── package.json                 # Scripts, motores y dependencias directas
+├── pnpm-lock.yaml               # Resolución exacta de dependencias
+├── pnpm-workspace.yaml          # Políticas de Node, supply chain y peers
+├── src/
+│   ├── App.test.tsx             # Prueba base de interfaz y accesibilidad
+│   ├── App.tsx                  # Portada técnica de la aplicación
+│   ├── main.tsx                 # Punto de montaje de React
+│   ├── styles.css               # Sistema visual mobile-first inicial
+│   ├── test/setup.ts            # Configuración de Testing Library
+│   └── vite-env.d.ts            # Tipos del entorno Vite
+├── tsconfig.app.json            # TypeScript para la aplicación
+├── tsconfig.json                # Referencias TypeScript del proyecto
+├── tsconfig.node.json           # TypeScript para configuración y tooling
+├── vite.config.ts               # Configuración de Vite y React
+└── vitest.config.ts             # Configuración de pruebas unitarias
 ```
 
 El índice debe actualizarse en el mismo commit que agregue, elimine o cambie el propósito de un archivo o directorio relevante.
@@ -58,9 +80,11 @@ Los comprobantes de compra, retiro y liquidación; comisiones; porcentajes; múl
 
 ## Stack acordado
 
-- React
-- TypeScript
-- Vite
+- React 19.2
+- TypeScript 6
+- Vite 8
+- Node.js 24 LTS y pnpm 11.9
+- Oxlint, Prettier, Vitest y Testing Library
 - Supabase y PostgreSQL
 - Git y GitHub público
 - Vercel
@@ -70,15 +94,39 @@ Los comprobantes de compra, retiro y liquidación; comisiones; porcentajes; múl
 ## Requisitos locales
 
 - Git.
-- Node.js en una versión LTS compatible con la versión de Vite que se seleccione.
-- Gestor de paquetes definido y fijado por lockfile en la Tarea 1.1.
+- Node.js `>=24.14.0 <25`; `.nvmrc` fija la línea 24 LTS.
+- pnpm `>=11.9.0 <12`.
 - Acceso autorizado a GitHub, Supabase y Vercel cuando corresponda.
 
-Estado verificado el 2026-07-29: Git y pnpm están disponibles; Node.js y npm no están en el `PATH`. Consultar [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md).
+Estado verificado el 2026-07-29: Git y pnpm están disponibles; el entorno de trabajo incluye Node.js v24.14.0 LTS aunque no esté en el `PATH` general. Consultar [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md).
 
 ## Instalación y ejecución local
 
-Los comandos exactos se incorporarán en la Tarea 1.1, después de crear y validar el proyecto Vite. No se publican comandos especulativos.
+Con Node.js 24 y pnpm 11 instalados:
+
+```bash
+pnpm install --frozen-lockfile
+pnpm dev
+```
+
+Vite sirve la aplicación en `http://localhost:5173` por defecto. Para revisar el build local:
+
+```bash
+pnpm build
+pnpm preview
+```
+
+Quienes usan nvm pueden ejecutar `nvm use` para seleccionar la línea indicada en `.nvmrc`.
+
+## Comandos de calidad
+
+```bash
+pnpm format:check  # Comprueba formato sin modificar archivos
+pnpm lint          # Ejecuta Oxlint
+pnpm typecheck     # Valida TypeScript
+pnpm test          # Ejecuta Vitest una vez
+pnpm check         # Ejecuta todas las validaciones y el build
+```
 
 ## Variables de entorno
 
@@ -93,7 +141,7 @@ Las migraciones versionadas vivirán en `supabase/migrations/` cuando se complet
 
 ## Pruebas
 
-Todavía no existe código ejecutable. La estrategia, las capas y los escenarios financieros obligatorios están definidos en [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md). Cada tarea funcional deberá agregar y ejecutar sus pruebas antes de cerrarse.
+La base incluye una prueba de interfaz que comprueba el encabezado accesible y el estado de la portada. La estrategia y los escenarios financieros obligatorios están definidos en [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md). Cada tarea funcional deberá ampliar y ejecutar sus pruebas antes de cerrarse.
 
 ## Despliegue
 
@@ -110,16 +158,16 @@ El flujo será local → rama de trabajo → GitHub → preview de Vercel → pr
 
 ## Documentación
 
-| Documento | Propósito |
-| --- | --- |
-| [`PROJECT.md`](PROJECT.md) | Resumen ejecutivo del producto y su arquitectura |
-| [`AGENTS.md`](AGENTS.md) | Reglas obligatorias de trabajo dentro del repositorio |
-| [`docs/PRODUCT_REQUIREMENTS.md`](docs/PRODUCT_REQUIREMENTS.md) | Requisitos del MVP y reglas operativas |
-| [`docs/DECISIONS.md`](docs/DECISIONS.md) | Decisiones, motivos y preguntas aún abiertas |
-| [`docs/ACTION_PLAN.md`](docs/ACTION_PLAN.md) | Secuencia completa de ejecución y criterios de cierre |
-| [`docs/DATA_MODEL.md`](docs/DATA_MODEL.md) | Modelo conceptual y restricciones financieras |
-| [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md) | Pruebas funcionales, financieras y de seguridad |
-| [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) | Entornos, variables, publicación y rollback |
-| [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md) | Herramientas y conexiones comprobadas |
-| [`docs/WORKFLOW.md`](docs/WORKFLOW.md) | Ramas, commits, pull requests y relevo |
-| [`docs/STATUS.md`](docs/STATUS.md) | Estado vivo y bitácora de tareas |
+| Documento                                                      | Propósito                                             |
+| -------------------------------------------------------------- | ----------------------------------------------------- |
+| [`PROJECT.md`](PROJECT.md)                                     | Resumen ejecutivo del producto y su arquitectura      |
+| [`AGENTS.md`](AGENTS.md)                                       | Reglas obligatorias de trabajo dentro del repositorio |
+| [`docs/PRODUCT_REQUIREMENTS.md`](docs/PRODUCT_REQUIREMENTS.md) | Requisitos del MVP y reglas operativas                |
+| [`docs/DECISIONS.md`](docs/DECISIONS.md)                       | Decisiones, motivos y preguntas aún abiertas          |
+| [`docs/ACTION_PLAN.md`](docs/ACTION_PLAN.md)                   | Secuencia completa de ejecución y criterios de cierre |
+| [`docs/DATA_MODEL.md`](docs/DATA_MODEL.md)                     | Modelo conceptual y restricciones financieras         |
+| [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md)                       | Pruebas funcionales, financieras y de seguridad       |
+| [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)                     | Entornos, variables, publicación y rollback           |
+| [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md)                   | Herramientas y conexiones comprobadas                 |
+| [`docs/WORKFLOW.md`](docs/WORKFLOW.md)                         | Ramas, commits, pull requests y relevo                |
+| [`docs/STATUS.md`](docs/STATUS.md)                             | Estado vivo y bitácora de tareas                      |

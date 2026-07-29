@@ -8,13 +8,14 @@
 - No existía repositorio Git, código, documentación ni configuración.
 - GitHub, Supabase y Vercel están conectados mediante integraciones autorizadas.
 - Git y pnpm están disponibles localmente.
-- Node.js y npm no están en el `PATH`; esto bloquea el scaffolding de Vite hasta resolver el runtime.
+- Node.js no está en el `PATH` del sistema, pero existe un runtime LTS utilizable en el entorno de trabajo.
 - El repositorio Git local está inicializado en `main`, sin remoto.
 - La documentación inicial está preparada, validada y versionada.
+- La aplicación React/Vite funciona localmente y tiene una prueba base, herramientas de calidad y build de producción validados.
 
 ## Tarea activa
 
-No hay una tarea activa. La Tarea 0.3 quedó cerrada y la Tarea 1.1 no comenzará hasta resolver B-001.
+No hay una tarea activa. La Tarea 1.1 está lista para su commit de cierre; la siguiente será la Tarea 1.2.
 
 ## Bitácora
 
@@ -61,14 +62,33 @@ Evidencia:
 - Identidad de autor configurada localmente para este repositorio.
 - Commit de cierre: `docs: establish project handoff documentation`.
 
-## Bloqueos
+### Tarea 1.1 — Crear proyecto React + TypeScript + Vite
+
+Estado: terminada.
+
+Evidencia:
+
+- Node.js v24.14.0 LTS y pnpm 11.9 fijados mediante motores, `.nvmrc`, workspace y lockfile.
+- React 19.2, TypeScript 6 y Vite 8 configurados con Oxlint y Prettier.
+- Vitest, jsdom y Testing Library configurados; una prueba de interfaz aprobada.
+- `pnpm peers check` terminó sin incidencias.
+- `pnpm check` aprobó formato, lint, tipos, prueba y build de producción.
+- Build generado: HTML 0.56 kB, CSS 4.15 kB y JavaScript 193.34 kB antes de gzip.
+- Portada técnica mobile-first sin datos operativos falsos.
+- Navegador validado en 390×844 y 1440×1000 sin desbordamiento horizontal.
+- DOM accesible comprobado y consola sin errores ni advertencias.
+- Revisión React: componentes estáticos, sin hooks innecesarios, waterfalls ni dependencias pesadas.
+- Rama de trabajo: `feature/scaffold-react-vite`.
+- Commit de cierre: `feat: scaffold React Vite application`.
+
+## Bloqueos resueltos
 
 ### B-001 — Runtime Node.js no disponible
 
 Impacto: la Tarea 1.1 no puede crear ni ejecutar una aplicación React/Vite de forma verificable.
 
-Siguiente resolución segura: confirmar una instalación existente no visible o autorizar un método de instalación que no comprometa otras carpetas. No se instalará globalmente por suposición.
+Resolución: se localizó Node.js v24.14.0 LTS dentro del runtime de trabajo. Se utilizará sin instalar herramientas globales ni modificar el equipo anfitrión.
 
 ## Próxima acción
 
-Resolver B-001 antes de iniciar la Tarea 1.1. No comenzar scaffolding ni trabajo remoto mientras el runtime siga ausente.
+Crear el commit de cierre de la Tarea 1.1. Después comenzar la Tarea 1.2 para crear y vincular el repositorio GitHub público sin mezclar cambios funcionales.

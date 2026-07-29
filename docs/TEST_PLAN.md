@@ -15,18 +15,18 @@ Demostrar que los flujos funcionan, los permisos separan roles y ninguna combina
 
 ## Casos financieros obligatorios
 
-| Flujo | Caso esperado | Casos de rechazo o recuperación |
-| --- | --- | --- |
-| Registro | Crea cliente y registra responsable | Teléfono duplicado, campos inválidos |
-| Recarga | Aumenta saldo e inserta movimiento | Cero, negativo, error intermedio, doble envío |
-| QR | Crea cobro pendiente con expiración | Monto inválido, negocio fuera del evento |
-| Compra | Débito, crédito, venta y QR pagado atómicos | Saldo insuficiente, vencido, usado, cancelado |
-| Concurrencia | Solo una confirmación gana | Dos confirmaciones simultáneas no duplican venta |
-| Cancelación | Compensa ambos saldos y conserva venta | Doble reversión, permisos incorrectos |
-| Retiro | Reduce saldo y registra anterior/posterior | Superior al saldo, cero, negativo |
-| Liquidación | Reduce pendiente por evento | Superior al pendiente, negocio/evento incorrecto |
-| CSV | Campos, totales y codificación correctos | Sin datos, caracteres especiales, filtros |
-| Demo | Inserta una sola vez y limpia solo demo | Ejecución repetida y datos reales coexistentes |
+| Flujo        | Caso esperado                               | Casos de rechazo o recuperación                  |
+| ------------ | ------------------------------------------- | ------------------------------------------------ |
+| Registro     | Crea cliente y registra responsable         | Teléfono duplicado, campos inválidos             |
+| Recarga      | Aumenta saldo e inserta movimiento          | Cero, negativo, error intermedio, doble envío    |
+| QR           | Crea cobro pendiente con expiración         | Monto inválido, negocio fuera del evento         |
+| Compra       | Débito, crédito, venta y QR pagado atómicos | Saldo insuficiente, vencido, usado, cancelado    |
+| Concurrencia | Solo una confirmación gana                  | Dos confirmaciones simultáneas no duplican venta |
+| Cancelación  | Compensa ambos saldos y conserva venta      | Doble reversión, permisos incorrectos            |
+| Retiro       | Reduce saldo y registra anterior/posterior  | Superior al saldo, cero, negativo                |
+| Liquidación  | Reduce pendiente por evento                 | Superior al pendiente, negocio/evento incorrecto |
+| CSV          | Campos, totales y codificación correctos    | Sin datos, caracteres especiales, filtros        |
+| Demo         | Inserta una sola vez y limpia solo demo     | Ejecución repetida y datos reales coexistentes   |
 
 ## Pruebas de permisos
 

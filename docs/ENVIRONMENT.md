@@ -4,35 +4,35 @@ Verificación realizada el 2026-07-29 en `/Users/luisadriandel/Desktop/cashless_
 
 ## Carpeta y Git
 
-| Elemento | Resultado |
-| --- | --- |
-| Carpeta de trabajo | Existe y estaba vacía al iniciar |
+| Elemento              | Resultado                                                   |
+| --------------------- | ----------------------------------------------------------- |
+| Carpeta de trabajo    | Existe y estaba vacía al iniciar                            |
 | Repositorio Git local | Inicializado en la rama `main` durante la documentación 0.3 |
-| Remoto Git | No configurado |
-| Historial | Commit documental inicial creado al cierre de la Tarea 0.3 |
+| Remoto Git            | No configurado                                              |
+| Historial             | Commit documental inicial creado al cierre de la Tarea 0.3  |
 
 ## Herramientas locales
 
-| Herramienta | Resultado |
-| --- | --- |
-| Git | 2.50.1 (Apple Git-155) |
-| pnpm | 11.9.0 |
-| Node.js | No disponible en `PATH` |
-| npm | No disponible en `PATH` |
-| Bun | No disponible en `PATH` |
-| GitHub CLI | No disponible en `PATH` |
-| Supabase CLI | No disponible en `PATH` |
-| Vercel CLI | No disponible en `PATH` |
+| Herramienta  | Resultado                                        |
+| ------------ | ------------------------------------------------ |
+| Git          | 2.50.1 (Apple Git-155)                           |
+| pnpm         | 11.9.0                                           |
+| Node.js      | v24.14.0 LTS en el runtime de trabajo; no global |
+| npm          | No disponible en `PATH`                          |
+| Bun          | No disponible en `PATH`                          |
+| GitHub CLI   | No disponible en `PATH`                          |
+| Supabase CLI | No disponible en `PATH`                          |
+| Vercel CLI   | No disponible en `PATH`                          |
 
-La creación del proyecto Vite requiere resolver Node.js antes de la Tarea 1.1. No se instalarán herramientas globales ni se modificarán otras carpetas sin autorización.
+La Tarea 1.1 usó el runtime Node.js incluido sin instalar herramientas globales. El repositorio exige Node.js `>=24.14.0 <25`, fija pnpm 11.9 y conserva un lockfile. `pnpm-workspace.yaml` aplica comprobación estricta de motores, espera mínima de 24 horas para publicaciones nuevas y una excepción de peer transitiva limitada al fallback WASM de Vite.
 
 ## Conectores disponibles
 
-| Servicio | Estado | Contexto comprobado |
-| --- | --- | --- |
-| GitHub | Conectado | Cuenta TISA (`tisacorreo-source`) |
-| Supabase | Conectado | Organización SomosTisa |
-| Vercel | Conectado | Equipo SomosTisa |
+| Servicio  | Estado               | Contexto comprobado                              |
+| --------- | -------------------- | ------------------------------------------------ |
+| GitHub    | Conectado            | Cuenta TISA (`tisacorreo-source`)                |
+| Supabase  | Conectado            | Organización SomosTisa                           |
+| Vercel    | Conectado            | Equipo SomosTisa                                 |
 | Navegador | Capacidad disponible | Reservada para configuración y validación visual |
 
 Los conectores evitan solicitar tokens ya autorizados. Crear proyectos, repositorios, despliegues o cambios externos se hará únicamente en su tarea y con los controles de autorización aplicables.

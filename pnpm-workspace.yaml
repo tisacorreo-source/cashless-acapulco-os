@@ -1,0 +1,7 @@
+engineStrict: true
+minimumReleaseAge: 1440
+nodeVersion: 24.14.0
+peerDependencyRules:
+  allowedVersions:
+    '@napi-rs/wasm-runtime@1.2.0>@emnapi/core': '1.11.1'
+    '@napi-rs/wasm-runtime@1.2.0>@emnapi/runtime': '1.11.1'

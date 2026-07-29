@@ -4,20 +4,20 @@ Este documento define el modelo conceptual inicial. El esquema físico, tipos, c
 
 ## Entidades principales
 
-| Entidad | Responsabilidad | Relaciones esenciales |
-| --- | --- | --- |
-| Administrador | Identidad y auditoría de operaciones administrativas | Registra clientes, recargas, retiros, cancelaciones y liquidaciones |
-| Cliente | Identidad del asistente y titular de saldo general | Tiene movimientos, recargas, compras, retiros y reversiones |
-| Negocio | Proveedor reutilizable entre eventos | Tiene usuario vendedor y participaciones por evento |
-| Evento | Periodo operativo activo o cerrado | Agrupa participaciones, recargas, cobros, ventas y liquidaciones |
-| Participación | Unión negocio–evento | Define alcance de ventas y balance del negocio por evento |
-| Solicitud de cobro | Intención temporal de compra representada por QR | Pertenece a participación; puede originar una venta |
-| Venta | Compra confirmada e inmutable | Relaciona cliente, negocio, evento, cobro y movimientos |
-| Movimiento financiero | Libro permanente de cambios de valor | Referencia la operación origen y saldos anterior/posterior cuando aplique |
-| Recarga | Efectivo recibido y crédito a cliente | Pertenece a cliente, evento y administrador |
-| Retiro | Débito a cliente y efectivo entregado | Pertenece a cliente y administrador |
-| Reversión | Compensación de una venta | Relaciona venta original, motivo y administrador |
-| Liquidación | Pago al negocio y reducción de su balance | Pertenece a negocio, evento y administrador |
+| Entidad               | Responsabilidad                                      | Relaciones esenciales                                                     |
+| --------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------- |
+| Administrador         | Identidad y auditoría de operaciones administrativas | Registra clientes, recargas, retiros, cancelaciones y liquidaciones       |
+| Cliente               | Identidad del asistente y titular de saldo general   | Tiene movimientos, recargas, compras, retiros y reversiones               |
+| Negocio               | Proveedor reutilizable entre eventos                 | Tiene usuario vendedor y participaciones por evento                       |
+| Evento                | Periodo operativo activo o cerrado                   | Agrupa participaciones, recargas, cobros, ventas y liquidaciones          |
+| Participación         | Unión negocio–evento                                 | Define alcance de ventas y balance del negocio por evento                 |
+| Solicitud de cobro    | Intención temporal de compra representada por QR     | Pertenece a participación; puede originar una venta                       |
+| Venta                 | Compra confirmada e inmutable                        | Relaciona cliente, negocio, evento, cobro y movimientos                   |
+| Movimiento financiero | Libro permanente de cambios de valor                 | Referencia la operación origen y saldos anterior/posterior cuando aplique |
+| Recarga               | Efectivo recibido y crédito a cliente                | Pertenece a cliente, evento y administrador                               |
+| Retiro                | Débito a cliente y efectivo entregado                | Pertenece a cliente y administrador                                       |
+| Reversión             | Compensación de una venta                            | Relaciona venta original, motivo y administrador                          |
+| Liquidación           | Pago al negocio y reducción de su balance            | Pertenece a negocio, evento y administrador                               |
 
 ## Separación de saldos
 
