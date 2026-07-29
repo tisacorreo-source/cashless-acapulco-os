@@ -9,13 +9,15 @@
 - GitHub, Supabase y Vercel están conectados mediante integraciones autorizadas.
 - Git y pnpm están disponibles localmente.
 - Node.js no está en el `PATH` del sistema, pero existe un runtime LTS utilizable en el entorno de trabajo.
-- El repositorio Git local está inicializado en `main`, sin remoto.
+- El repositorio Git local está inicializado en `main` y vinculado al remoto público de GitHub.
 - La documentación inicial está preparada, validada y versionada.
 - La aplicación React/Vite funciona localmente y tiene una prueba base, herramientas de calidad y build de producción validados.
 
 ## Tarea activa
 
-No hay una tarea activa. La Tarea 1.1 está lista para su commit de cierre; la siguiente será la Tarea 1.2.
+**Entrega 1 — Tarea 1.3: Diseñar modelo de datos físico.**
+
+Estado: bloqueada antes de implementación por las decisiones P-002 a P-007. No se crearán tablas ni migraciones hasta definir normalización de teléfonos, correo, zona horaria, importes, asociación de recargas y cancelaciones posteriores a una liquidación.
 
 ## Bitácora
 
@@ -81,6 +83,28 @@ Evidencia:
 - Rama de trabajo: `feature/scaffold-react-vite`.
 - Commit de cierre: `feat: scaffold React Vite application`.
 
+### Tarea 1.2 — Crear repositorio GitHub público
+
+Estado: terminada.
+
+Evidencia:
+
+- Repositorio público creado: [`tisacorreo-source/cashless-acapulco-os`](https://github.com/tisacorreo-source/cashless-acapulco-os).
+- `origin` usa HTTPS y apunta al repositorio esperado.
+- `main` se publicó y quedó configurada como rama predeterminada y de seguimiento.
+- La API de GitHub confirmó que `README.md` está visible en `main`.
+- El repositorio local conserva únicamente `.env.example`; los demás archivos `.env*` y `.tools/` están ignorados.
+- Se verificaron alcance de archivos, patrones de credenciales, formato, lint, tipos, pruebas y build antes del cierre.
+- GitHub CLI 2.94.0 se instaló de forma local y descartable dentro de `.tools/`, sin incorporarlo al repositorio.
+
+## Bloqueos activos
+
+### B-003 — Definiciones previas al modelo de datos físico
+
+Impacto: elegir tipos, restricciones y transacciones sin estas respuestas podría introducir duplicados de clientes, fechas ambiguas o inconsistencias financieras.
+
+Resolución esperada: confirmar las decisiones P-002 a P-007 registradas en `docs/DECISIONS.md` antes de implementar la Tarea 1.3.
+
 ## Bloqueos resueltos
 
 ### B-001 — Runtime Node.js no disponible
@@ -89,6 +113,12 @@ Impacto: la Tarea 1.1 no puede crear ni ejecutar una aplicación React/Vite de f
 
 Resolución: se localizó Node.js v24.14.0 LTS dentro del runtime de trabajo. Se utilizará sin instalar herramientas globales ni modificar el equipo anfitrión.
 
+### B-002 — Autorización OAuth de GitHub CLI
+
+Impacto original: impedía crear y publicar el repositorio remoto.
+
+Resolución: el titular completó el flujo OAuth; se verificó la cuenta `tisacorreo-source`, se creó el repositorio público y se publicó `main`.
+
 ## Próxima acción
 
-Crear el commit de cierre de la Tarea 1.1. Después comenzar la Tarea 1.2 para crear y vincular el repositorio GitHub público sin mezclar cambios funcionales.
+Obtener las definiciones P-002 a P-007 y, solo después, diseñar el modelo físico, sus invariantes, transacciones y políticas RLS en la Tarea 1.3.

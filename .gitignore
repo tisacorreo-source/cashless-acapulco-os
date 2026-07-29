@@ -1,6 +1,7 @@
 # Dependencies and builds
 node_modules/
 .pnpm-store/
+.tools/
 dist/
 coverage/
 .vite/

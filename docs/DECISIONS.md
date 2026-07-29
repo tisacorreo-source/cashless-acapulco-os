@@ -18,6 +18,7 @@ Las decisiones confirmadas no deben reinterpretarse silenciosamente. Un cambio s
 | D-010 | 2026-07-29 | README y STATUS serán índices vivos                                  | Cada cambio estructural o de tarea debe mantener el contexto para relevos                |
 | D-011 | 2026-07-29 | Node.js 24 LTS y pnpm 11.9 para la base local                        | Mantiene compatibilidad con Vite 8 y fija la resolución mediante lockfile                |
 | D-012 | 2026-07-29 | Oxlint, Prettier y Vitest como herramientas iniciales                | Sigue el template oficial actual de Vite y añade formato y pruebas reproducibles         |
+| D-013 | 2026-07-29 | El repositorio público es `tisacorreo-source/cashless-acapulco-os`   | Coincide con el producto y la carpeta local; `main` es la rama predeterminada            |
 
 ## Decisiones pendientes
 
@@ -33,7 +34,6 @@ No bloquean la documentación inicial. Se resolverán antes de la tarea indicada
 | P-006 | Qué evento se asocia a una recarga cuando no hay uno activo          | 1.3/2.2      | El saldo es global, pero el reporte exige evento  |
 | P-007 | Política para cancelar una venta cuando el negocio ya fue liquidado  | 1.3/2.8      | Puede producir saldo negativo o deuda del negocio |
 | P-008 | Política para cerrar eventos con QR pendientes o saldos por liquidar | 2.3          | Define consistencia operativa                     |
-| P-009 | Nombre definitivo del repositorio público                            | 1.2          | Necesario para crear y vincular GitHub            |
 
 ## Criterio para nuevas decisiones
 

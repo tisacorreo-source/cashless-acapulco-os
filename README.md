@@ -6,16 +6,16 @@ Este archivo es el índice vivo del repositorio. Si una persona llega por primer
 
 ## Estado actual
 
-| Campo                  | Estado                                                      |
-| ---------------------- | ----------------------------------------------------------- |
-| Fase                   | Entrega 1 — Base funcional local                            |
-| Última tarea terminada | Tarea 1.1 — Crear proyecto React + TypeScript + Vite        |
-| Tarea en curso         | Ninguna; la siguiente comienza después del commit de cierre |
-| Próxima tarea          | Tarea 1.2 — Crear repositorio GitHub público                |
-| Código funcional       | Portada técnica local validada                              |
-| Repositorio remoto     | Aún no creado ni vinculado                                  |
-| Despliegue             | Aún no realizado                                            |
-| Bloqueo conocido       | Ninguno                                                     |
+| Campo                  | Estado                                                                                                |
+| ---------------------- | ----------------------------------------------------------------------------------------------------- |
+| Fase                   | Entrega 1 — Base funcional local                                                                      |
+| Última tarea terminada | Tarea 1.2 — Crear repositorio GitHub público                                                          |
+| Tarea en curso         | Ninguna; la Tarea 1.3 espera definiciones de producto                                                 |
+| Próxima tarea          | Resolver P-002 a P-007 y diseñar el modelo de datos físico                                            |
+| Código funcional       | Portada técnica local validada                                                                        |
+| Repositorio remoto     | [`tisacorreo-source/cashless-acapulco-os`](https://github.com/tisacorreo-source/cashless-acapulco-os) |
+| Despliegue             | Aún no realizado                                                                                      |
+| Bloqueo conocido       | Decisiones funcionales y financieras previas al diseño físico                                         |
 
 El detalle y la bitácora se mantienen en [`docs/STATUS.md`](docs/STATUS.md).
 
