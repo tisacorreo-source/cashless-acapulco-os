@@ -1,5 +1,7 @@
 # Plan de acción secuencial
 
+Objetivo vigente: completar un primer piloto demostrable con datos ficticios. La venta del sistema, el dinero real y la producción comercial quedan fuera de alcance por D-026.
+
 ## Reglas de estado
 
 - `Terminada`: criterios cumplidos y evidencia registrada.
@@ -24,7 +26,7 @@
 | 1.3 Diseñar modelo de datos físico           | Terminada | Entidades, restricciones, transacciones, RLS y movimientos documentados antes de tablas |
 | 1.4 Conectar Supabase                        | Terminada | Migraciones versionadas aplicadas, tipos generados, RLS y conexión probados             |
 | 1.5 Implementar autenticación y acceso       | Terminada | Roles separados, teléfono único, acceso limitado y pruebas de permisos                  |
-| 1.6 Crear navegación y estructura visual     | Pendiente | Vistas mobile-first funcionales para los tres roles                                     |
+| 1.6 Crear navegación y estructura visual     | Terminada | Vistas mobile-first funcionales para los tres roles                                     |
 
 ## Entrega 2 — Operación cashless
 
@@ -43,15 +45,15 @@
 
 ## Entrega 3 — Reportes, pruebas y despliegue
 
-| Tarea                          | Estado    | Criterio de cierre resumido                                          |
-| ------------------------------ | --------- | -------------------------------------------------------------------- |
-| 3.1 Exportaciones CSV          | Pendiente | Seis exportaciones con campos, codificación y montos correctos       |
-| 3.2 Datos demo                 | Pendiente | Inserción y limpieza idempotentes y seguras                          |
-| 3.3 Pruebas integrales locales | Pendiente | Flujo completo sin errores, duplicados ni inconsistencias            |
-| 3.4 Validación con navegador   | Pendiente | Mobile, escritorio, formularios, QR, consola y red verificados       |
-| 3.5 Preparación para Vercel    | Pendiente | Build de producción, SPA, variables e integración revisados          |
-| 3.6 Despliegue en Vercel       | Pendiente | URL obtenida, logs y Supabase verificados, documentación actualizada |
-| 3.7 Prueba en producción       | Pendiente | Flujos completos con datos demo y errores registrados como issues    |
+| Tarea                          | Estado    | Criterio de cierre resumido                                            |
+| ------------------------------ | --------- | ---------------------------------------------------------------------- |
+| 3.1 Exportaciones CSV          | Pendiente | Seis exportaciones con campos, codificación y montos correctos         |
+| 3.2 Datos demo                 | Pendiente | Inserción y limpieza idempotentes y seguras                            |
+| 3.3 Pruebas integrales locales | Pendiente | Flujo completo sin errores, duplicados ni inconsistencias              |
+| 3.4 Validación con navegador   | Pendiente | Mobile, escritorio, formularios, QR, consola y red verificados         |
+| 3.5 Preparación para Vercel    | Pendiente | Build de producción, SPA, variables e integración revisados            |
+| 3.6 Preview piloto en Vercel   | Pendiente | URL controlada, logs y Supabase verificados, documentación actualizada |
+| 3.7 Validación integral piloto | Pendiente | Flujos demo completos y errores registrados como issues                |
 
 ## Puerta entre tareas
 

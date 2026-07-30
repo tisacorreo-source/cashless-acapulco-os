@@ -95,7 +95,9 @@ describe('AccessPortal', () => {
     expect(
       await screen.findByRole('heading', { name: 'TISA' }),
     ).toBeInTheDocument()
-    expect(screen.getByText(/administración/i)).toBeInTheDocument()
+    expect(
+      screen.getByRole('navigation', { name: 'Navegación de Administración' }),
+    ).toBeInTheDocument()
   })
 
   it('mantiene genérica la respuesta de recuperación de contraseña', async () => {

@@ -58,6 +58,8 @@ Demostrar que los flujos funcionan, los permisos separan roles y ninguna combina
 
 En mobile y escritorio verificar navegación, estados vacíos, formularios, mensajes claros, escaneo/lectura de QR, confirmaciones, carga y errores. Revisar consola y red. El código por sí solo no constituye validación visual.
 
+La Tarea 1.6 validó los espacios de administrador, vendedor y cliente a 1440×1000 y 390×844. En cada perfil se activó al menos un módulo, se comprobó `aria-current`, ausencia de desbordamiento horizontal, ausencia de la pantalla de error de Vite y consola sin errores ni advertencias.
+
 ## Evidencia por tarea
 
 Registrar en `docs/STATUS.md`:

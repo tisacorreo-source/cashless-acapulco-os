@@ -1,24 +1,69 @@
 import { AccessPortal } from './features/auth/AccessPortal.tsx'
+import type { AccessIdentity, AccessRole } from './features/auth/access.ts'
+import { RoleWorkspace } from './features/navigation/RoleWorkspace.tsx'
 
 const foundations = [
   {
-    label: 'Interfaz',
-    value: 'React + TypeScript',
-    description: 'Base tipada para construir los recorridos por rol.',
+    label: 'Recorridos',
+    value: 'Tres perfiles',
+    description: 'Administrador, punto de venta y cliente bien separados.',
   },
   {
-    label: 'Desarrollo',
-    value: 'Vite',
-    description: 'Entorno rápido con build reproducible para producción.',
+    label: 'Información',
+    value: 'Datos ficticios',
+    description: 'Una simulación identificada, reversible y sin dinero real.',
   },
   {
-    label: 'Experiencia',
-    value: 'Mobile-first',
-    description: 'Diseñada desde el inicio para operar durante eventos.',
+    label: 'Objetivo',
+    value: 'Piloto verificable',
+    description: 'Un evento demo completo antes de cualquier uso operativo.',
   },
 ] as const
 
+const pilotPreviewNames: Record<AccessRole, string> = {
+  admin: 'Administrador TISA',
+  client: 'Cliente Piloto',
+  seller: 'Mar Azul Demo',
+}
+
+function readPilotPreviewIdentity(): AccessIdentity | null {
+  if (!import.meta.env.DEV) return null
+
+  const candidate = new URLSearchParams(window.location.search).get('pilotRole')
+
+  if (!candidate || !['admin', 'client', 'seller'].includes(candidate)) {
+    return null
+  }
+
+  const role = candidate as AccessRole
+
+  return {
+    businessPublicId: role === 'seller' ? 'business-preview' : null,
+    clientPublicId: role === 'client' ? 'client-preview' : null,
+    displayName: pilotPreviewNames[role],
+    role,
+    sessionExpiresAt:
+      role === 'client'
+        ? new Date(Date.now() + 8 * 60 * 60 * 1000).toISOString()
+        : null,
+  }
+}
+
 function App() {
+  const pilotPreviewIdentity = readPilotPreviewIdentity()
+
+  if (pilotPreviewIdentity) {
+    return (
+      <main className="app-shell app-shell--pilot-preview">
+        <RoleWorkspace
+          identity={pilotPreviewIdentity}
+          onSignOut={() => window.location.assign('/')}
+          pending={false}
+        />
+      </main>
+    )
+  }
+
   return (
     <main className="app-shell">
       <header className="site-header" aria-label="Identidad del producto">
@@ -31,34 +76,34 @@ function App() {
             <span>Cashless</span>
           </span>
         </a>
-        <span className="phase-pill">MVP · Base técnica</span>
+        <span className="phase-pill">Piloto · Datos ficticios</span>
       </header>
 
       <section className="hero" id="inicio">
         <div className="hero-copy">
-          <p className="eyebrow">Infraestructura inicial lista</p>
-          <h1 aria-label="Sistema Cashless Acapulco">
-            Sistema Cashless
+          <p className="eyebrow">Primer piloto en construcción</p>
+          <h1 aria-label="Piloto Cashless Acapulco">
+            Piloto Cashless
             <span> Acapulco</span>
           </h1>
           <p className="hero-description">
-            Una plataforma para operar recargas, compras y liquidaciones con
-            trazabilidad completa en eventos recurrentes.
+            Una simulación para recorrer recargas, compras y liquidaciones con
+            trazabilidad completa, sin dinero ni datos personales reales.
           </p>
 
           <div className="status-card" role="status">
             <span className="status-dot" aria-hidden="true" />
             <span>
-              <strong>Autenticación base conectada</strong>
-              <small>Acceso separado y autorizado desde PostgreSQL.</small>
+              <strong>Acceso por rol listo</strong>
+              <small>Navegación separada para los tres perfiles.</small>
             </span>
           </div>
         </div>
 
         <aside className="signal-card" aria-label="Estado de la entrega">
-          <span className="signal-card__label">Entrega 1</span>
+          <span className="signal-card__label">Piloto 01</span>
           <strong>01</strong>
-          <p>Base funcional local</p>
+          <p>Navegación por rol</p>
           <div className="signal-lines" aria-hidden="true">
             <span />
             <span />
@@ -71,8 +116,8 @@ function App() {
 
       <section className="foundations" aria-labelledby="foundations-title">
         <div className="section-heading">
-          <p className="eyebrow">Fundamentos</p>
-          <h2 id="foundations-title">Preparada para crecer por etapas</h2>
+          <p className="eyebrow">Alcance controlado</p>
+          <h2 id="foundations-title">Diseñado para aprender con el piloto</h2>
         </div>
 
         <div className="foundation-grid">

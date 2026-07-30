@@ -8,29 +8,16 @@ import {
   createAccessService,
   readAuthRedirectState,
 } from './access.ts'
+import { RoleWorkspace } from '../navigation/RoleWorkspace.tsx'
 
 interface AccessPortalProps {
   service?: AccessService
 }
 
-const roleLabels = {
-  admin: 'Administración',
-  client: 'Cliente',
-  seller: 'Punto de venta',
-} as const
-
 function getErrorMessage(error: unknown): string {
   return error instanceof AccessError
     ? error.message
     : 'Ocurrió un error inesperado. Inténtalo nuevamente.'
-}
-
-function formatExpiry(value: string): string {
-  return new Intl.DateTimeFormat('es-MX', {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-    timeZone: 'America/Mexico_City',
-  }).format(new Date(value))
 }
 
 export function AccessPortal({ service }: AccessPortalProps) {
@@ -215,32 +202,19 @@ export function AccessPortal({ service }: AccessPortalProps) {
         </p>
       </div>
 
-      <div className="access-panel">
+      <div
+        className={`access-panel${identity ? ' access-panel--workspace' : ''}`}
+      >
         {pending && !identity ? (
           <p className="access-loading" role="status">
             Validando sesión…
           </p>
         ) : identity ? (
-          <div className="identity-card">
-            <span className="identity-card__role">
-              {roleLabels[identity.role]}
-            </span>
-            <h3>{identity.displayName}</h3>
-            <p>Tu acceso está activo y autorizado.</p>
-            {identity.sessionExpiresAt ? (
-              <small>
-                Esta sesión termina el {formatExpiry(identity.sessionExpiresAt)}
-                . Después deberás ingresar nuevamente.
-              </small>
-            ) : null}
-            <button
-              type="button"
-              onClick={() => void signOut()}
-              disabled={pending}
-            >
-              {pending ? 'Cerrando…' : 'Cerrar sesión'}
-            </button>
-          </div>
+          <RoleWorkspace
+            identity={identity}
+            onSignOut={() => void signOut()}
+            pending={pending}
+          />
         ) : (
           <>
             {mode !== 'recovery' && mode !== 'update-password' ? (
