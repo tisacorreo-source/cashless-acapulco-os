@@ -63,6 +63,17 @@ Registrar en `docs/STATUS.md`:
 - Errores conocidos.
 - Commit de cierre.
 
+## Base de datos reproducible
+
+`supabase/tests/database/` contiene pruebas pgTAP versionadas. Con el stack local de Supabase activo:
+
+```bash
+pnpm exec supabase db reset
+pnpm exec supabase test db
+```
+
+La Tarea 1.4 verificó además en el proyecto remoto, siempre con datos efímeros y `ROLLBACK`: 16/16 tablas con RLS, ausencia de escrituras directas, límites de monto, ledger inmutable, forma de recarga y visibilidad de administrador, vendedor y cliente.
+
 ## Puerta de despliegue
 
 No desplegar con pruebas fallidas, permisos sin verificar, saldos inconsistentes, duplicación posible, migraciones no versionadas, secretos detectados o build de producción fallido.

@@ -9,13 +9,13 @@ Este archivo es el índice vivo del repositorio. Si una persona llega por primer
 | Campo                  | Estado                                                                                                |
 | ---------------------- | ----------------------------------------------------------------------------------------------------- |
 | Fase                   | Entrega 1 — Base funcional local                                                                      |
-| Última tarea terminada | Tarea 1.3 — Diseñar modelo de datos físico                                                            |
-| Tarea en curso         | Ninguna; la Tarea 1.3 está terminada                                                                  |
-| Próxima tarea          | Tarea 1.4 — Conectar Supabase y convertir el contrato físico en migraciones                           |
+| Última tarea terminada | Tarea 1.4 — Conectar Supabase                                                                         |
+| Tarea en curso         | Ninguna; la Tarea 1.4 está terminada                                                                  |
+| Próxima tarea          | Tarea 1.5 — Resolver decisiones de autenticación e implementar acceso                                 |
 | Código funcional       | Portada técnica local validada                                                                        |
 | Repositorio remoto     | [`tisacorreo-source/cashless-acapulco-os`](https://github.com/tisacorreo-source/cashless-acapulco-os) |
 | Despliegue             | Aún no realizado                                                                                      |
-| Bloqueo conocido       | Ninguno en la tarea actual; crear o elegir Supabase requiere el control externo aplicable             |
+| Bloqueo conocido       | La Tarea 1.5 espera definir credencial/recuperación administrativa y duración de sesión del cliente   |
 
 El detalle y la bitácora se mantienen en [`docs/STATUS.md`](docs/STATUS.md).
 
@@ -51,10 +51,24 @@ El detalle y la bitácora se mantienen en [`docs/STATUS.md`](docs/STATUS.md).
 ├── src/
 │   ├── App.test.tsx             # Prueba base de interfaz y accesibilidad
 │   ├── App.tsx                  # Portada técnica de la aplicación
+│   ├── lib/
+│   │   ├── supabase.test.ts     # Pruebas de configuración pública segura
+│   │   └── supabase.ts          # Cliente Supabase lazy, tipado y limitado a api
 │   ├── main.tsx                 # Punto de montaje de React
 │   ├── styles.css               # Sistema visual mobile-first inicial
 │   ├── test/setup.ts            # Configuración de Testing Library
+│   ├── types/database.ts        # Contrato TypeScript de la superficie Data API
 │   └── vite-env.d.ts            # Tipos del entorno Vite
+├── supabase/
+│   ├── .gitignore               # Estado local de Supabase excluido de Git
+│   ├── config.toml              # Configuración local; sólo api queda expuesto
+│   ├── migrations/
+│   │   └── 20260730011421_create_cashless_schema.sql
+│   │                               # Esquema físico, índices, RLS e invariantes
+│   ├── seed.sql                 # Punto de entrada reservado para datos demo
+│   └── tests/database/
+│       └── 0001_schema_contract.test.sql
+│                                   # Contrato pgTAP de estructura y privilegios
 ├── tsconfig.app.json            # TypeScript para la aplicación
 ├── tsconfig.json                # Referencias TypeScript del proyecto
 ├── tsconfig.node.json           # TypeScript para configuración y tooling
@@ -86,6 +100,7 @@ Los comprobantes de compra, retiro y liquidación; comisiones; porcentajes; múl
 - Node.js 24 LTS y pnpm 11.9
 - Oxlint, Prettier, Vitest y Testing Library
 - Supabase y PostgreSQL
+- Supabase JS 2.111 y CLI 2.110
 - Git y GitHub público
 - Vercel
 - Interfaz mobile-first en español
@@ -135,13 +150,23 @@ pnpm check         # Ejecuta todas las validaciones y el build
 3. Nunca usar una clave `service_role` o secreta en variables con prefijo `VITE_`.
 4. No confirmar archivos `.env*`; `.env.example` es la única excepción.
 
-## Migraciones y datos demo
+## Supabase, migraciones y datos demo
 
-Las migraciones versionadas vivirán en `supabase/migrations/` cuando se complete el diseño de datos y se conecte Supabase. Los datos demo tendrán scripts de inserción y limpieza idempotentes, claramente marcados para no afectar información real.
+El proyecto remoto activo es `Cashless Acapulco` (`ypeabqwaragnnavvmgyg`). La aplicación sólo expone el esquema `api`; las tablas del esquema `cashless` se consumen mediante vistas y RPC revisadas conforme se implementen.
+
+Con Docker disponible, el flujo local reproducible es:
+
+```bash
+pnpm exec supabase start
+pnpm exec supabase db reset
+pnpm exec supabase test db
+```
+
+Crear una migración únicamente mediante `pnpm exec supabase migration new <nombre>`. Nunca editar una migración que ya fue aplicada; usar una migración correctiva. `supabase/seed.sql` queda reservado para la Tarea 3.2 y no inserta datos todavía.
 
 ## Pruebas
 
-La base incluye una prueba de interfaz que comprueba el encabezado accesible y el estado de la portada. La estrategia y los escenarios financieros obligatorios están definidos en [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md). Cada tarea funcional deberá ampliar y ejecutar sus pruebas antes de cerrarse.
+La base incluye pruebas de interfaz y configuración pública, además de un contrato pgTAP para el esquema remoto. La estrategia y los escenarios financieros obligatorios están definidos en [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md). Cada tarea funcional deberá ampliar y ejecutar sus pruebas antes de cerrarse.
 
 ## Despliegue
 

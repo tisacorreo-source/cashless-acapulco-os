@@ -48,6 +48,8 @@ Cada PR debe declarar objetivo, alcance, criterios de aceptación, pruebas, arch
 ## Migraciones
 
 - Una tarea de datos produce migraciones versionadas y revisables.
+- Crear archivos con `pnpm exec supabase migration new <nombre>`; no inventar marcas de tiempo.
+- Con Docker disponible, ejecutar `pnpm exec supabase db reset` y `pnpm exec supabase test db`.
 - Nunca modificar una migración ya aplicada en un entorno compartido; crear una correctiva.
 - Registrar orden, prueba y recuperación.
 - No ejecutar cambios destructivos sin respaldo y aprobación.
