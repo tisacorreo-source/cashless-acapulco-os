@@ -10,7 +10,7 @@ Este archivo es el índice vivo del repositorio. Si una persona llega por primer
 | ---------------------- | ----------------------------------------------------------------------------------------------------- |
 | Fase                   | Piloto — Operación cashless ficticia                                                                  |
 | Última tarea terminada | Tarea 1.6 — Crear navegación y estructura visual                                                      |
-| Tarea en curso         | Ninguna; cierre y publicación de la Tarea 1.6                                                         |
+| Tarea en curso         | Ninguna; Tarea 1.6 publicada para revisión en el PR #4                                                |
 | Próxima tarea          | Tarea 2.1 — Registro de clientes ficticios                                                            |
 | Código funcional       | Portal de acceso y navegación mobile-first para administrador, vendedor y cliente                     |
 | Repositorio remoto     | [`tisacorreo-source/cashless-acapulco-os`](https://github.com/tisacorreo-source/cashless-acapulco-os) |

@@ -192,7 +192,9 @@ Evidencia:
 - La interfaz se validó a 1440×1000 y 390×844 sin desbordamiento horizontal, pantalla de error ni mensajes de consola.
 - `pnpm check` aprobó formato, lint, tipos, 21 pruebas y el build de producción.
 - La revisión de buenas prácticas React no detectó waterfalls, dependencias pesadas ni trabajo derivado innecesario.
-- Rama de trabajo: `feature/pilot-role-navigation`.
+- Rama publicada: `feature/pilot-role-navigation`.
+- Commit funcional: `e43f58f` (`feat: add pilot role navigation`).
+- Revisión abierta: PR borrador [#4 — feat: add pilot role navigation](https://github.com/tisacorreo-source/cashless-acapulco-os/pull/4).
 
 ## Bloqueos activos
 
@@ -238,4 +240,4 @@ Resolución: el titular inició sesión en el Dashboard; se activó y verificó 
 
 ## Próxima acción
 
-Publicar el cierre de la Tarea 1.6 y después iniciar la Tarea 2.1 para registro de clientes ficticios.
+Iniciar la Tarea 2.1 para registro de clientes ficticios desde una rama nueva cuando el PR #4 quede integrado en `main`.
