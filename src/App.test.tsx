@@ -13,8 +13,11 @@ describe('App', () => {
         name: /sistema cashless acapulco/i,
       }),
     ).toBeInTheDocument()
-    expect(screen.getByRole('status')).toHaveTextContent(
-      /aplicación local funcionando/i,
-    )
+    expect(
+      screen.getByText(/autenticación base conectada/i),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: /entra según tu operación/i }),
+    ).toBeInTheDocument()
   })
 })

@@ -8,11 +8,11 @@ Construir un MVP web cashless para eventos recurrentes que conserve saldos, ejec
 
 ### Administrador
 
-Durante el MVP existirá una sola cuenta. Accederá con usuario y contraseña o PIN; el mecanismo exacto se decidirá en la tarea de autenticación. Puede crear eventos y negocios, asignarlos, registrar clientes, recargar, consultar, cancelar ventas, retirar saldo, liquidar negocios y exportar información.
+Durante el MVP existirá una sola cuenta administrativa. Accede con `tisacorreo@gmail.com` y contraseña mediante Supabase Auth, con recuperación por correo. Puede crear eventos y negocios, asignarlos, registrar clientes, recargar, consultar, cancelar ventas, retirar saldo, liquidar negocios y exportar información.
 
 ### Cliente
 
-Se registra en un punto autorizado con nombre, teléfono y correo opcional. El teléfono E.164 es único y el correo, cuando existe, también es único sin distinguir mayúsculas. Accede con nombre y teléfono como limitación aceptada del MVP. Puede consultar saldo e historial, escanear un QR, revisar el cobro, confirmar una compra y solicitar un retiro presencial.
+Se registra en un punto autorizado con nombre, teléfono y correo opcional. El teléfono E.164 es único y el correo, cuando existe, también es único sin distinguir mayúsculas. Accede con nombre y teléfono como limitación aceptada del MVP. La sesión dura exactamente ocho horas desde la autenticación y no se renueva; después debe presentar los datos otra vez. Puede consultar saldo e historial, escanear un QR, revisar el cobro, confirmar una compra y solicitar un retiro presencial.
 
 ### Negocio
 

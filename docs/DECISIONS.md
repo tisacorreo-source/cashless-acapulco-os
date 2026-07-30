@@ -29,16 +29,16 @@ Las decisiones confirmadas no deben reinterpretarse silenciosamente. Un cambio s
 | D-021 | 2026-07-29 | Tablas internas en `cashless` y superficie explícita en `api`          | Reduce exposición y obliga a declarar RLS, vistas, funciones y privilegios mínimos          |
 | D-022 | 2026-07-29 | `Cashless Acapulco` usa Supabase `ypeabqwaragnnavvmgyg` en `us-east-1` | Fija el backend compartido del MVP; el costo confirmado al crearlo fue USD 0 mensual        |
 | D-023 | 2026-07-29 | `TISA OS Pilot` permanece pausado temporalmente                        | Libera el cupo gratuito para Cashless; la pausa es reversible y fue solicitada expresamente |
+| D-024 | 2026-07-29 | El administrador usa correo y contraseña con recuperación por correo   | Usa Supabase Auth nativo; la cuenta inicial corresponde a `tisacorreo@gmail.com`            |
+| D-025 | 2026-07-29 | La sesión del cliente dura ocho horas y no se renueva automáticamente  | Al vencer exige presentar de nuevo nombre y teléfono; reduce la exposición del acceso débil |
 
 ## Decisiones pendientes
 
 Permanecen abiertas y se resolverán antes de la tarea indicada.
 
-| ID    | Decisión necesaria                                                   | Tarea límite | Por qué importa                                    |
-| ----- | -------------------------------------------------------------------- | ------------ | -------------------------------------------------- |
-| P-001 | Contraseña o PIN para el administrador y política de recuperación    | 1.5          | Define autenticación, UX y riesgo operativo        |
-| P-008 | Política para cerrar eventos con QR pendientes o saldos por liquidar | 2.3          | Define consistencia operativa                      |
-| P-009 | Duración y renovación de la sesión temporal del cliente              | 1.5          | Limita exposición del acceso por nombre y teléfono |
+| ID    | Decisión necesaria                                                   | Tarea límite | Por qué importa               |
+| ----- | -------------------------------------------------------------------- | ------------ | ----------------------------- |
+| P-008 | Política para cerrar eventos con QR pendientes o saldos por liquidar | 2.3          | Define consistencia operativa |
 
 ## Criterio para nuevas decisiones
 
