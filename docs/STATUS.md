@@ -18,7 +18,7 @@
 
 ## Tarea activa
 
-Ninguna. La Tarea 1.5 está publicada para revisión en el PR borrador [#3](https://github.com/tisacorreo-source/cashless-acapulco-os/pull/3); la siguiente tarea autorizada será 1.6 después de integrar este cambio.
+Ninguna. La Tarea 1.5 quedó cerrada mediante el PR [#3](https://github.com/tisacorreo-source/cashless-acapulco-os/pull/3); la siguiente tarea autorizada es 1.6.
 
 ## Bitácora
 
@@ -163,7 +163,7 @@ Evidencia acumulada:
 - El primer clic de la invitación confirmó el correo y creó la sesión administrativa; los clics posteriores devolvieron `otp_expired` porque el enlace era de un solo uso y el servidor local todavía no estaba activo.
 - El frontend ahora reconoce invitaciones y recuperaciones válidas, dirige a la creación de contraseña y convierte enlaces vencidos en un recorrido de recuperación accionable.
 - El servidor local responde con HTTP 200 en `http://localhost:5173`; se envió un correo de recuperación nuevo a `tisacorreo@gmail.com` y los logs de Auth confirmaron `/recover` y `mail.send` sin error.
-- El titular debe abrir el correo de recuperación más reciente mientras el servidor local siga activo y elegir la contraseña personal; esa acción no requiere almacenar ni compartir la credencial con el proyecto.
+- El titular completó el flujo de recuperación. La consulta final confirmó correo verificado, contraseña configurada y perfil único `admin` activo; los logs registraron login implícito y actualización de usuario con HTTP 200.
 - Rama publicada: `feature/authentication-access`.
 - Commit funcional: `9787fbb` (`feat: implement authentication access`).
 - Revisión abierta: PR borrador [#3 — feat: implement authentication access](https://github.com/tisacorreo-source/cashless-acapulco-os/pull/3).
@@ -212,4 +212,4 @@ Resolución: el titular inició sesión en el Dashboard; se activó y verificó 
 
 ## Próxima acción
 
-Revisar e integrar el PR [#3](https://github.com/tisacorreo-source/cashless-acapulco-os/pull/3) y, solo después, iniciar la Tarea 1.6 para navegación y estructura visual por rol.
+Iniciar la Tarea 1.6 para navegación y estructura visual por rol.
