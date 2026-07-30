@@ -22,11 +22,11 @@ Producto complejo con datos financieros operativos. Requiere transacciones atóm
 
 - SPA React con TypeScript y Vite.
 - Supabase para PostgreSQL, autenticación y lógica transaccional autorizada.
-- GitHub público como fuente de verdad remota cuando se autorice su creación.
+- GitHub público como fuente de verdad remota.
 - Vercel para previews y producción.
 - Interfaz mobile-first en español y moneda MXN.
 
-El modelo físico, las políticas y las funciones transaccionales se diseñarán antes de crear tablas. Ver `docs/DATA_MODEL.md`.
+El modelo físico, las políticas y las funciones transaccionales están definidos antes de crear tablas. Ver `docs/DATA_MODEL.md`.
 
 ## Alcance excluido
 

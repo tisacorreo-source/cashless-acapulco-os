@@ -21,7 +21,7 @@
 | -------------------------------------------- | --------- | --------------------------------------------------------------------------------------- |
 | 1.1 Crear proyecto React + TypeScript + Vite | Terminada | App inicia, lint y build pasan, página inicial visible, comandos documentados           |
 | 1.2 Crear repositorio GitHub público         | Terminada | Remoto accesible, `main` funcional, README visible, sin secretos                        |
-| 1.3 Diseñar modelo de datos físico           | Bloqueada | Entidades, restricciones, transacciones, RLS y movimientos documentados antes de tablas |
+| 1.3 Diseñar modelo de datos físico           | Terminada | Entidades, restricciones, transacciones, RLS y movimientos documentados antes de tablas |
 | 1.4 Conectar Supabase                        | Pendiente | Migraciones versionadas aplicadas, tipos generados, RLS y conexión probados             |
 | 1.5 Implementar autenticación y acceso       | Pendiente | Roles separados, teléfono único, acceso limitado y pruebas de permisos                  |
 | 1.6 Crear navegación y estructura visual     | Pendiente | Vistas mobile-first funcionales para los tres roles                                     |

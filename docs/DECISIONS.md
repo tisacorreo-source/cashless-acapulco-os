@@ -19,21 +19,23 @@ Las decisiones confirmadas no deben reinterpretarse silenciosamente. Un cambio s
 | D-011 | 2026-07-29 | Node.js 24 LTS y pnpm 11.9 para la base local                        | Mantiene compatibilidad con Vite 8 y fija la resolución mediante lockfile                |
 | D-012 | 2026-07-29 | Oxlint, Prettier y Vitest como herramientas iniciales                | Sigue el template oficial actual de Vite y añade formato y pruebas reproducibles         |
 | D-013 | 2026-07-29 | El repositorio público es `tisacorreo-source/cashless-acapulco-os`   | Coincide con el producto y la carpeta local; `main` es la rama predeterminada            |
+| D-014 | 2026-07-29 | Teléfonos en E.164, con `+52` predeterminado                         | Evita duplicados por formato y permite números internacionales                           |
+| D-015 | 2026-07-29 | Correo de cliente opcional y único cuando exista                     | Admite registros sin correo y evita reutilizar uno normalizado                           |
+| D-016 | 2026-07-29 | UTC interno y presentación en `America/Mexico_City`                  | Evita instantes ambiguos y fija el contexto operativo de Acapulco                        |
+| D-017 | 2026-07-29 | Dinero en centavos; cada operación entre $50 y $1,000 MXN            | Elimina punto flotante; los saldos acumulados no tienen ese tope                         |
+| D-018 | 2026-07-29 | Toda recarga requiere seleccionar un evento                          | Conserva la clasificación exigida sin inferir un evento por estado o fecha               |
+| D-019 | 2026-07-29 | Una reversión posliquidación genera deuda negocio–evento             | Mantiene la reversión completa y descuenta la deuda de ventas posteriores                |
+| D-020 | 2026-07-29 | Libro inmutable con transacciones, asientos y saldos proyectados     | Permite auditoría y actualizaciones atómicas con invariantes comprobables                |
+| D-021 | 2026-07-29 | Tablas internas en `cashless` y superficie explícita en `api`        | Reduce exposición y obliga a declarar RLS, vistas, funciones y privilegios mínimos       |
 
 ## Decisiones pendientes
 
-No bloquean la documentación inicial. Se resolverán antes de la tarea indicada.
+Permanecen abiertas y se resolverán antes de la tarea indicada.
 
-| ID    | Decisión necesaria                                                   | Tarea límite | Por qué importa                                   |
-| ----- | -------------------------------------------------------------------- | ------------ | ------------------------------------------------- |
-| P-001 | Contraseña o PIN para el administrador y política de recuperación    | 1.5          | Define autenticación, UX y riesgo operativo       |
-| P-002 | Normalización exacta de teléfonos mexicanos e internacionales        | 1.3/1.5      | Afecta unicidad, acceso y duplicados              |
-| P-003 | Si el correo del cliente es obligatorio y único o solo informativo   | 1.3          | Afecta restricciones y registro                   |
-| P-004 | Zona horaria canónica de eventos y reportes                          | 1.3          | Afecta expiración de QR, fechas y CSV             |
-| P-005 | Precisión y límites técnicos de importes                             | 1.3          | Afecta tipos SQL, validaciones y pruebas          |
-| P-006 | Qué evento se asocia a una recarga cuando no hay uno activo          | 1.3/2.2      | El saldo es global, pero el reporte exige evento  |
-| P-007 | Política para cancelar una venta cuando el negocio ya fue liquidado  | 1.3/2.8      | Puede producir saldo negativo o deuda del negocio |
-| P-008 | Política para cerrar eventos con QR pendientes o saldos por liquidar | 2.3          | Define consistencia operativa                     |
+| ID    | Decisión necesaria                                                   | Tarea límite | Por qué importa                             |
+| ----- | -------------------------------------------------------------------- | ------------ | ------------------------------------------- |
+| P-001 | Contraseña o PIN para el administrador y política de recuperación    | 1.5          | Define autenticación, UX y riesgo operativo |
+| P-008 | Política para cerrar eventos con QR pendientes o saldos por liquidar | 2.3          | Define consistencia operativa               |
 
 ## Criterio para nuevas decisiones
 

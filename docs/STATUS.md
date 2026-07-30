@@ -15,9 +15,7 @@
 
 ## Tarea activa
 
-**Entrega 1 — Tarea 1.3: Diseñar modelo de datos físico.**
-
-Estado: bloqueada antes de implementación por las decisiones P-002 a P-007. No se crearán tablas ni migraciones hasta definir normalización de teléfonos, correo, zona horaria, importes, asociación de recargas y cancelaciones posteriores a una liquidación.
+No hay una tarea activa. La Tarea 1.3 está diseñada y validada para su commit de cierre; la siguiente será la Tarea 1.4.
 
 ## Bitácora
 
@@ -97,13 +95,26 @@ Evidencia:
 - Se verificaron alcance de archivos, patrones de credenciales, formato, lint, tipos, pruebas y build antes del cierre.
 - GitHub CLI 2.94.0 se instaló de forma local y descartable dentro de `.tools/`, sin incorporarlo al repositorio.
 
+### Tarea 1.3 — Diseñar modelo de datos físico
+
+Estado: terminada.
+
+Evidencia:
+
+- Las decisiones P-002 a P-007 fueron respondidas por el responsable y registradas como D-014 a D-019.
+- `docs/DATA_MODEL.md` define esquemas, tablas, columnas, tipos, restricciones, índices, relaciones y reglas de borrado.
+- El libro financiero separa transacciones, asientos inmutables y saldos proyectados.
+- Se documentaron forma exacta de asientos, idempotencia, orden de bloqueos y funciones atómicas para los cinco tipos de operación.
+- La deuda negocio–evento por reversión posliquidación y su amortización quedaron explícitas.
+- Se diseñó una superficie `api` mínima sobre tablas internas `cashless`, con RLS, privilegios explícitos y funciones endurecidas.
+- Requisitos y plan de pruebas incorporan E.164, correo opcional único, UTC, zona local y fronteras monetarias de $50–$1,000 MXN.
+- Se revisaron el changelog y la documentación vigente de Supabase sobre Data API, RLS y funciones de base de datos.
+- `pnpm check`, la validación estructural del contrato y los enlaces de 12 documentos terminaron correctamente.
+- No se crearon tablas, migraciones ni recursos remotos durante esta tarea.
+
 ## Bloqueos activos
 
-### B-003 — Definiciones previas al modelo de datos físico
-
-Impacto: elegir tipos, restricciones y transacciones sin estas respuestas podría introducir duplicados de clientes, fechas ambiguas o inconsistencias financieras.
-
-Resolución esperada: confirmar las decisiones P-002 a P-007 registradas en `docs/DECISIONS.md` antes de implementar la Tarea 1.3.
+Ninguno.
 
 ## Bloqueos resueltos
 
@@ -119,6 +130,12 @@ Impacto original: impedía crear y publicar el repositorio remoto.
 
 Resolución: el titular completó el flujo OAuth; se verificó la cuenta `tisacorreo-source`, se creó el repositorio público y se publicó `main`.
 
+### B-003 — Definiciones previas al modelo de datos físico
+
+Impacto original: impedía elegir restricciones de identidad, fechas y dinero sin inventar decisiones del producto.
+
+Resolución: el responsable confirmó E.164, correo opcional único, zona horaria, centavos y límites, selección obligatoria de evento y deuda por reversión posliquidación.
+
 ## Próxima acción
 
-Obtener las definiciones P-002 a P-007 y, solo después, diseñar el modelo físico, sus invariantes, transacciones y políticas RLS en la Tarea 1.3.
+Crear el commit de cierre de la Tarea 1.3. Después iniciar la Tarea 1.4, inspeccionando primero los proyectos Supabase disponibles y el control de costo antes de crear o modificar recursos.
