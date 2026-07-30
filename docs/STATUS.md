@@ -15,7 +15,7 @@
 
 ## Tarea activa
 
-No hay una tarea activa. La Tarea 1.3 está diseñada y validada para su commit de cierre; la siguiente será la Tarea 1.4.
+No hay una tarea activa. La Tarea 1.3 está cerrada y fusionada en `main`; la siguiente será la Tarea 1.4.
 
 ## Bitácora
 
@@ -111,6 +111,9 @@ Evidencia:
 - Se revisaron el changelog y la documentación vigente de Supabase sobre Data API, RLS y funciones de base de datos.
 - `pnpm check`, la validación estructural del contrato y los enlaces de 12 documentos terminaron correctamente.
 - No se crearon tablas, migraciones ni recursos remotos durante esta tarea.
+- Rama: `feature/physical-data-model`.
+- Pull request fusionado: [#1 — docs: define physical data model](https://github.com/tisacorreo-source/cashless-acapulco-os/pull/1).
+- Commit en `main`: `dbc6ea4 docs: define physical data model`.
 
 ## Bloqueos activos
 
@@ -138,4 +141,4 @@ Resolución: el responsable confirmó E.164, correo opcional único, zona horari
 
 ## Próxima acción
 
-Crear el commit de cierre de la Tarea 1.3. Después iniciar la Tarea 1.4, inspeccionando primero los proyectos Supabase disponibles y el control de costo antes de crear o modificar recursos.
+Iniciar la Tarea 1.4 inspeccionando primero los proyectos Supabase disponibles y el control de costo antes de crear o modificar recursos.
