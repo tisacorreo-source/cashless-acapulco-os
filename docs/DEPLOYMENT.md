@@ -10,9 +10,9 @@ Desarrollo y validación inicial. Los comandos exactos se añadirán al crear el
 
 Cada rama o pull request autorizados podrá producir un preview. Debe usar configuración controlada, distinguirse de producción y validarse antes de fusionar.
 
-### Producción
+### Producción comercial
 
-Se promueve únicamente con aprobación explícita. Durante el MVP compartirá proyecto Supabase con desarrollo, decisión que obliga a usar datos demo identificados, políticas estrictas y procedimientos no destructivos.
+Fuera del alcance vigente por D-026. El piloto se limitará a local y, cuando corresponda, a un preview controlado con datos ficticios.
 
 ## Flujo previsto
 
@@ -22,8 +22,8 @@ Se promueve únicamente con aprobación explícita. Durante el MVP compartirá p
 4. Crear o inspeccionar preview de Vercel.
 5. Probar mobile, escritorio, consola, red y flujos principales.
 6. Corregir fallos antes de fusionar.
-7. Solicitar aprobación para producción.
-8. Desplegar, revisar logs y probar con datos demo.
+7. Publicar únicamente el preview autorizado para el piloto.
+8. Revisar logs y probar con datos demo.
 9. Registrar URL, commit, migraciones y resultado en `docs/STATUS.md`.
 
 ## Variables
@@ -52,7 +52,7 @@ La preparación de Vercel deberá verificar build, directorio de salida y fallba
 - Datos: usar migración correctiva o respaldo; nunca reescribir o borrar movimientos financieros para “deshacer”.
 - Cada despliegue registrará commit y migraciones para hacer trazable la recuperación.
 
-## Criterios antes de producción
+## Criterios antes del preview piloto
 
 - Build local correcto.
 - Suite completa aprobada.
@@ -60,4 +60,4 @@ La preparación de Vercel deberá verificar build, directorio de salida y fallba
 - Datos demo idempotentes.
 - Sin secretos ni archivos locales en Git.
 - URL de preview validada.
-- Aprobación explícita del responsable.
+- Cero datos personales o transacciones reales.

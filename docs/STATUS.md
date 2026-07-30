@@ -1,6 +1,6 @@
 # Estado y bitácora del proyecto
 
-Última actualización: 2026-07-29.
+Última actualización: 2026-07-30.
 
 ## Resumen para relevo
 
@@ -14,13 +14,23 @@
 - La aplicación React/Vite funciona localmente y tiene pruebas, herramientas de calidad y build de producción validados.
 - El proyecto Supabase `Cashless Acapulco` está activo y contiene el esquema físico versionado.
 - La autenticación por rol, la migración, el portal y la configuración alojada de Auth están implementados y validados.
+- El producto comercial fue cancelado; el trabajo continúa como primer piloto demostrable con datos exclusivamente ficticios.
 - `TISA OS Pilot` está pausado temporalmente por indicación expresa del responsable.
 
 ## Tarea activa
 
-Ninguna. La Tarea 1.5 quedó cerrada mediante el PR [#3](https://github.com/tisacorreo-source/cashless-acapulco-os/pull/3); la siguiente tarea autorizada es 1.6.
+Ninguna durante el cierre y publicación de la Tarea 1.6. La siguiente tarea secuencial es 2.1 — Registro de clientes ficticios.
 
 ## Bitácora
+
+### Cambio de objetivo — Primer piloto
+
+Estado: vigente.
+
+- El responsable canceló la intención de vender la aplicación y autorizó continuar con un primer piloto.
+- D-026 limita el piloto a identidades, eventos, saldos y movimientos ficticios.
+- Se conserva la arquitectura y las reglas financieras para que la demostración represente el comportamiento correcto.
+- Producción comercial, dinero real y datos personales reales quedan fuera de alcance.
 
 ### Tarea 0.1 — Revisar plugins, skills y capacidades
 
@@ -166,7 +176,25 @@ Evidencia acumulada:
 - El titular completó el flujo de recuperación. La consulta final confirmó correo verificado, contraseña configurada y perfil único `admin` activo; los logs registraron login implícito y actualización de usuario con HTTP 200.
 - Rama publicada: `feature/authentication-access`.
 - Commit funcional: `9787fbb` (`feat: implement authentication access`).
-- Revisión abierta: PR borrador [#3 — feat: implement authentication access](https://github.com/tisacorreo-source/cashless-acapulco-os/pull/3).
+- Pull request fusionado: [#3 — feat: implement authentication access](https://github.com/tisacorreo-source/cashless-acapulco-os/pull/3).
+
+### Tarea 1.6 — Crear navegación y estructura visual
+
+Estado: terminada.
+
+Evidencia:
+
+- La aplicación ofrece espacios diferenciados para administrador, vendedor y cliente después de resolver la identidad autenticada.
+- Cada rol dispone de navegación accesible y del mapa completo de módulos permitidos; `aria-current` identifica el módulo activo.
+- La portada de cada rol presenta métricas ficticias y una advertencia visible de que no representan personas, operaciones ni dinero real.
+- La vista de desarrollo permite revisar de forma segura cada rol mediante `?pilotRole=admin`, `seller` o `client`; este atajo no se incluye en producción ni ejecuta operaciones de Supabase.
+- Se probaron transiciones reales hacia Clientes, Crear cobro y Escanear QR.
+- La interfaz se validó a 1440×1000 y 390×844 sin desbordamiento horizontal, pantalla de error ni mensajes de consola.
+- `pnpm check` aprobó formato, lint, tipos, 21 pruebas y el build de producción.
+- La revisión de buenas prácticas React no detectó waterfalls, dependencias pesadas ni trabajo derivado innecesario.
+- Rama publicada: `feature/pilot-role-navigation`.
+- Commit funcional: `e43f58f` (`feat: add pilot role navigation`).
+- Revisión abierta: PR borrador [#4 — feat: add pilot role navigation](https://github.com/tisacorreo-source/cashless-acapulco-os/pull/4).
 
 ## Bloqueos activos
 
@@ -212,4 +240,4 @@ Resolución: el titular inició sesión en el Dashboard; se activó y verificó 
 
 ## Próxima acción
 
-Iniciar la Tarea 1.6 para navegación y estructura visual por rol.
+Iniciar la Tarea 2.1 para registro de clientes ficticios desde una rama nueva cuando el PR #4 quede integrado en `main`.

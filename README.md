@@ -1,22 +1,22 @@
 # Sistema Cashless Acapulco
 
-Aplicación web mobile-first para operar saldo digital en eventos recurrentes. El MVP permitirá registrar clientes y negocios, administrar eventos, recibir recargas en efectivo, cobrar mediante QR, conservar un libro de movimientos financieros, efectuar reversiones, retiros y liquidaciones, y exportar información administrativa.
+Piloto web mobile-first para demostrar saldo digital en eventos recurrentes con datos ficticios. Permitirá recorrer registro, recargas simuladas, cobros QR, movimientos financieros, reversiones, retiros, liquidaciones y exportaciones sin operar dinero real ni comercializar la aplicación.
 
 Este archivo es el índice vivo del repositorio. Si una persona llega por primera vez al proyecto, debe comenzar aquí y continuar con [`PROJECT.md`](PROJECT.md), [`docs/STATUS.md`](docs/STATUS.md) y [`docs/ACTION_PLAN.md`](docs/ACTION_PLAN.md).
 
 ## Estado actual
 
-| Campo                  | Estado                                                                                                                    |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| Fase                   | Entrega 1 — Base funcional local                                                                                          |
-| Última tarea terminada | Tarea 1.5 — Implementar autenticación y acceso                                                                            |
-| Tarea en curso         | Ninguna; la Tarea 1.5 quedó cerrada mediante el PR [#3](https://github.com/tisacorreo-source/cashless-acapulco-os/pull/3) |
-| Próxima tarea          | Tarea 1.6 — Crear navegación y estructura visual                                                                          |
-| Código funcional       | Portal de acceso por rol conectado y Auth alojado validado                                                                |
-| Repositorio remoto     | [`tisacorreo-source/cashless-acapulco-os`](https://github.com/tisacorreo-source/cashless-acapulco-os)                     |
-| Despliegue             | Aún no realizado                                                                                                          |
-| Bloqueo conocido       | Ninguno                                                                                                                   |
-| Acción del titular     | Ninguna                                                                                                                   |
+| Campo                  | Estado                                                                                                |
+| ---------------------- | ----------------------------------------------------------------------------------------------------- |
+| Fase                   | Piloto — Operación cashless ficticia                                                                  |
+| Última tarea terminada | Tarea 1.6 — Crear navegación y estructura visual                                                      |
+| Tarea en curso         | Ninguna; Tarea 1.6 publicada para revisión en el PR #4                                                |
+| Próxima tarea          | Tarea 2.1 — Registro de clientes ficticios                                                            |
+| Código funcional       | Portal de acceso y navegación mobile-first para administrador, vendedor y cliente                     |
+| Repositorio remoto     | [`tisacorreo-source/cashless-acapulco-os`](https://github.com/tisacorreo-source/cashless-acapulco-os) |
+| Despliegue             | Preview controlado pendiente; producción comercial fuera de alcance                                   |
+| Bloqueo conocido       | Ninguno                                                                                               |
+| Acción del titular     | Ninguna                                                                                               |
 
 El detalle y la bitácora se mantienen en [`docs/STATUS.md`](docs/STATUS.md).
 
@@ -57,6 +57,10 @@ El detalle y la bitácora se mantienen en [`docs/STATUS.md`](docs/STATUS.md).
 │   │   ├── AccessPortal.tsx     # Portal de personal, cliente y recuperación
 │   │   ├── access.test.ts       # Pruebas de normalización y contraseña
 │   │   └── access.ts            # Servicio de Supabase Auth y RPC de acceso
+│   ├── features/navigation/
+│   │   ├── RoleWorkspace.test.tsx # Pruebas de módulos, roles y cierre de sesión
+│   │   ├── RoleWorkspace.tsx    # Espacio mobile-first compartido por los tres roles
+│   │   └── role-navigation.ts   # Navegación y métricas ficticias por rol
 │   ├── lib/
 │   │   ├── supabase.test.ts     # Pruebas de configuración pública segura
 │   │   └── supabase.ts          # Cliente Supabase lazy, tipado y limitado a api
@@ -88,7 +92,7 @@ El detalle y la bitácora se mantienen en [`docs/STATUS.md`](docs/STATUS.md).
 
 El índice debe actualizarse en el mismo commit que agregue, elimine o cambie el propósito de un archivo o directorio relevante.
 
-## Alcance del MVP
+## Alcance del primer piloto
 
 - Un administrador con control operativo general.
 - Clientes registrados por nombre, teléfono único y correo opcional único cuando exista.
@@ -99,8 +103,9 @@ El índice debe actualizarse en el mismo commit que agregue, elimine o cambie el
 - Recargas, cobros QR con vigencia de cinco minutos y confirmación explícita.
 - Historiales, cancelaciones compensatorias, retiros y liquidaciones.
 - Exportaciones CSV y datos demo identificables y reversibles.
+- Operación exclusiva con identidades, eventos, saldos y movimientos ficticios.
 
-Los comprobantes de compra, retiro y liquidación; comisiones; porcentajes; múltiples administradores y autenticación avanzada quedan fuera del MVP inicial.
+Los comprobantes de compra, retiro y liquidación; comisiones; porcentajes; múltiples administradores, autenticación avanzada, dinero real, datos personales reales y comercialización quedan fuera del primer piloto.
 
 ## Stack acordado
 
@@ -176,11 +181,11 @@ Crear una migración únicamente mediante `pnpm exec supabase migration new <nom
 
 ## Pruebas
 
-La base incluye 16 pruebas de interfaz, redirecciones Auth, normalización y configuración pública, además de contratos pgTAP para el esquema y la autenticación remotos. La estrategia y los escenarios financieros obligatorios están definidos en [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md). Cada tarea funcional deberá ampliar y ejecutar sus pruebas antes de cerrarse.
+La base incluye 21 pruebas de interfaz, navegación por roles, redirecciones Auth, normalización y configuración pública, además de contratos pgTAP para el esquema y la autenticación remotos. La estrategia y los escenarios financieros obligatorios están definidos en [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md). Cada tarea funcional deberá ampliar y ejecutar sus pruebas antes de cerrarse.
 
 ## Despliegue
 
-El flujo será local → rama de trabajo → GitHub → preview de Vercel → producción aprobada. No se desplegará mientras existan fallas de build, pruebas, permisos, saldos, secretos o idempotencia. Consultar [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
+El flujo será local → rama de trabajo → GitHub → preview controlado de Vercel. La producción comercial queda fuera del alcance vigente. No se publicará un preview mientras existan fallas de build, pruebas, permisos, saldos, secretos o idempotencia. Consultar [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
 
 ## Cómo retomar el trabajo
 

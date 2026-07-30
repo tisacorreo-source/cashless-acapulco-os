@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Construir un MVP web cashless para eventos recurrentes que conserve saldos, ejecute cobros atómicos, permita operación administrativa y mantenga trazabilidad permanente de cada cambio financiero.
+Construir un primer piloto web cashless para eventos recurrentes que demuestre saldos, cobros atómicos, operación administrativa y trazabilidad permanente usando únicamente información y dinero ficticios.
 
 ## Roles y acceso
 
@@ -93,7 +93,7 @@ Los campos mínimos de cada archivo están enumerados en `docs/DATA_MODEL.md` y 
 
 ### Datos demo
 
-Un administrador, tres negocios, cinco clientes, un evento activo, recargas, ventas, una cancelación, un retiro y una liquidación. Los scripts deben ser idempotentes, identificar datos demo y limpiarlos sin afectar datos reales.
+Un administrador, tres negocios, cinco clientes, un evento activo, recargas, ventas, una cancelación, un retiro y una liquidación ficticios. Los scripts deben ser idempotentes, identificar datos demo y limpiarlos sin afectar la configuración administrativa.
 
 ## Requisitos no funcionales
 
@@ -109,4 +109,4 @@ Un administrador, tres negocios, cinco clientes, un evento activo, recargas, ven
 
 ## Fuera de alcance
 
-Comprobantes, comisiones, porcentajes, múltiples administradores, múltiples usuarios por negocio y autenticación robusta del cliente.
+Comprobantes, comisiones, porcentajes, múltiples administradores, múltiples usuarios por negocio, autenticación robusta del cliente, datos personales reales, dinero real, venta del sistema y producción comercial.
