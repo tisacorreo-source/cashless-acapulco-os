@@ -6,17 +6,17 @@ Este archivo es el índice vivo del repositorio. Si una persona llega por primer
 
 ## Estado actual
 
-| Campo                  | Estado                                                                                                |
-| ---------------------- | ----------------------------------------------------------------------------------------------------- |
-| Fase                   | Entrega 1 — Base funcional local                                                                      |
-| Última tarea terminada | Tarea 1.5 — Implementar autenticación y acceso                                                        |
-| Tarea en curso         | Ninguna; la Tarea 1.5 está en cierre de publicación                                                   |
-| Próxima tarea          | Tarea 1.6 — Crear navegación y estructura visual                                                      |
-| Código funcional       | Portal de acceso por rol conectado y Auth alojado validado                                            |
-| Repositorio remoto     | [`tisacorreo-source/cashless-acapulco-os`](https://github.com/tisacorreo-source/cashless-acapulco-os) |
-| Despliegue             | Aún no realizado                                                                                      |
-| Bloqueo conocido       | Ninguno                                                                                               |
-| Acción del titular     | Aceptar la invitación de Supabase recibida en `tisacorreo@gmail.com` y elegir su contraseña           |
+| Campo                  | Estado                                                                                                                                      |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Fase                   | Entrega 1 — Base funcional local                                                                                                            |
+| Última tarea terminada | Tarea 1.5 — Implementar autenticación y acceso                                                                                              |
+| Tarea en curso         | Ninguna; la Tarea 1.5 está publicada para revisión en el PR borrador [#3](https://github.com/tisacorreo-source/cashless-acapulco-os/pull/3) |
+| Próxima tarea          | Tarea 1.6 — Crear navegación y estructura visual                                                                                            |
+| Código funcional       | Portal de acceso por rol conectado y Auth alojado validado                                                                                  |
+| Repositorio remoto     | [`tisacorreo-source/cashless-acapulco-os`](https://github.com/tisacorreo-source/cashless-acapulco-os)                                       |
+| Despliegue             | Aún no realizado                                                                                                                            |
+| Bloqueo conocido       | Ninguno                                                                                                                                     |
+| Acción del titular     | Aceptar la invitación de Supabase recibida en `tisacorreo@gmail.com` y elegir su contraseña                                                 |
 
 El detalle y la bitácora se mantienen en [`docs/STATUS.md`](docs/STATUS.md).
 

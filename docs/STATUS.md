@@ -18,7 +18,7 @@
 
 ## Tarea activa
 
-Ninguna mientras se publica el cierre de la Tarea 1.5 desde `feature/authentication-access`. La siguiente tarea autorizada será 1.6.
+Ninguna. La Tarea 1.5 está publicada para revisión en el PR borrador [#3](https://github.com/tisacorreo-source/cashless-acapulco-os/pull/3); la siguiente tarea autorizada será 1.6 después de integrar este cambio.
 
 ## Bitácora
 
@@ -161,6 +161,9 @@ Evidencia acumulada:
 - Una llamada real con la llave publicable creó una sesión anónima válida; su usuario técnico exacto fue eliminado inmediatamente después de la prueba.
 - La invitación a `tisacorreo@gmail.com` creó un usuario Auth y el trigger generó el perfil único `admin`, activo y con nombre `Administrador TISA`.
 - El titular debe aceptar la invitación desde su correo y elegir la contraseña personal; esa acción no requiere almacenar ni compartir la credencial con el proyecto.
+- Rama publicada: `feature/authentication-access`.
+- Commit funcional: `9787fbb` (`feat: implement authentication access`).
+- Revisión abierta: PR borrador [#3 — feat: implement authentication access](https://github.com/tisacorreo-source/cashless-acapulco-os/pull/3).
 
 ## Bloqueos activos
 
@@ -206,4 +209,4 @@ Resolución: el titular inició sesión en el Dashboard; se activó y verificó 
 
 ## Próxima acción
 
-Publicar el cierre de la Tarea 1.5 y, solo después, iniciar la Tarea 1.6 para navegación y estructura visual por rol.
+Revisar e integrar el PR [#3](https://github.com/tisacorreo-source/cashless-acapulco-os/pull/3) y, solo después, iniciar la Tarea 1.6 para navegación y estructura visual por rol.
