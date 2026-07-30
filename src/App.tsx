@@ -1,3 +1,5 @@
+import { AccessPortal } from './features/auth/AccessPortal.tsx'
+
 const foundations = [
   {
     label: 'Interfaz',
@@ -47,8 +49,8 @@ function App() {
           <div className="status-card" role="status">
             <span className="status-dot" aria-hidden="true" />
             <span>
-              <strong>Aplicación local funcionando</strong>
-              <small>React, TypeScript, Vite y pruebas configurados.</small>
+              <strong>Autenticación base conectada</strong>
+              <small>Acceso separado y autorizado desde PostgreSQL.</small>
             </span>
           </div>
         </div>
@@ -64,6 +66,8 @@ function App() {
           </div>
         </aside>
       </section>
+
+      <AccessPortal />
 
       <section className="foundations" aria-labelledby="foundations-title">
         <div className="section-heading">

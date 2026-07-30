@@ -1,6 +1,6 @@
 # Modelo de datos físico
 
-Contrato de esquema aprobado en la Tarea 1.3. Este documento define tablas, tipos, restricciones, índices, transacciones y RLS antes de crear la primera migración. La Tarea 1.4 deberá convertirlo en SQL versionado y comprobarlo contra una instancia autorizada de Supabase; este diseño por sí solo no modifica ninguna base de datos.
+Contrato de esquema aprobado en la Tarea 1.3 e implementado de forma incremental en las Tareas 1.4 y 1.5. Este documento refleja las tablas, tipos, restricciones, índices, transacciones, autenticación y RLS que ya están versionados y aplicados al proyecto autorizado de Supabase.
 
 ## Decisiones de dominio incorporadas
 
@@ -38,6 +38,7 @@ Las vistas y funciones de `api` serializarán importes y saldos como cadenas dec
 erDiagram
   AUTH_USERS ||--o| STAFF_PROFILES : "identifica"
   AUTH_USERS ||--o{ CLIENT_ACCESS_SESSIONS : "abre"
+  AUTH_USERS ||--o| CLIENT_ACCESS_ATTEMPTS : "limita"
   BUSINESSES ||--o| STAFF_PROFILES : "tiene vendedor"
   CLIENTS ||--|| CLIENT_ACCOUNTS : "posee saldo global"
   CLIENTS ||--o{ CLIENT_ACCESS_SESSIONS : "autoriza"
@@ -71,7 +72,8 @@ Todas las claves foráneas usan `on delete restrict` salvo que se indique lo con
 | `cashless.staff_profiles`         | `auth_user_id uuid`, `role text`, `business_id bigint null`, `display_name text`, `is_active boolean`, `created_at timestamptz`                                                                    | PK/FK a `auth.users`; rol `admin` o `seller`; administrador sin negocio, vendedor con negocio; un administrador y un vendedor por negocio          |
 | `cashless.clients`                | `id bigint`, `public_id uuid`, `full_name text`, `access_name text`, `phone_e164 text`, `email text null`, `is_active boolean`, `demo_batch_id uuid`, `created_by uuid`, `created_at timestamptz`  | PK `id`; `public_id` y teléfono únicos; correo normalizado único cuando no es nulo; E.164 `^\+[1-9][0-9]{7,14}$`; nombres normalizados y no vacíos |
 | `cashless.client_accounts`        | `client_id bigint`, `balance_cents bigint`, `balance_version bigint`, `updated_at timestamptz`                                                                                                     | PK/FK `client_id`; saldo `>= 0`; versión `>= 0`; solo funciones financieras pueden actualizar                                                      |
-| `cashless.client_access_sessions` | `auth_user_id uuid`, `client_id bigint`, `expires_at timestamptz`, `revoked_at timestamptz null`, `created_at timestamptz`                                                                         | PK/FK `auth_user_id`; sesión válida únicamente si no está revocada y no venció; la política de duración se fija en la Tarea 1.5                    |
+| `cashless.client_access_sessions` | `auth_user_id uuid`, `client_id bigint`, `authenticated_at timestamptz`, `expires_at timestamptz`, `revoked_at timestamptz null`, `created_at timestamptz`                                         | PK/FK `auth_user_id`; `expires_at = authenticated_at + 8 hours`; sesión válida únicamente si no está revocada y no venció                          |
+| `cashless.client_access_attempts` | `auth_user_id uuid`, `window_started_at timestamptz`, `attempt_count smallint`, `last_attempt_at timestamptz`, `blocked_until timestamptz null`                                                    | PK/FK a `auth.users` con borrado en cascada; máximo cinco intentos por ventana; bloqueo de quince minutos; sin privilegios ni políticas directas   |
 | `cashless.events`                 | `id bigint`, `public_id uuid`, `name text`, `starts_at timestamptz`, `ends_at timestamptz`, `timezone_name text`, `status text`, `demo_batch_id uuid`, `created_by uuid`, `created_at timestamptz` | PK `id`; `public_id` única; `ends_at > starts_at`; zona igual a `America/Mexico_City`; estado `active` o `closed`                                  |
 | `cashless.event_businesses`       | `id bigint`, `public_id uuid`, `event_id bigint`, `business_id bigint`, `balance_cents bigint`, `balance_version bigint`, `is_active boolean`, `created_at timestamptz`                            | PK `id`; `public_id` única; pareja evento–negocio única; el saldo puede ser negativo solo por reversión posterior a liquidación; versión `>= 0`    |
 
@@ -81,6 +83,8 @@ Normalización de identidad:
 - `email` se guarda como `lower(btrim(email))`. Un índice único parcial `where email is not null` permite varios nulos, pero no correos repetidos.
 - `access_name` usa minúsculas, extremos recortados y espacios internos colapsados. Sirve para la limitación de acceso del MVP; `full_name` conserva la forma visible.
 - No se usa `raw_user_meta_data` para autorizar. La fuente de roles es `staff_profiles` y la relación del cliente es `client_access_sessions`.
+- El administrador inicial se reconoce únicamente al crear un usuario permanente con el correo normalizado `tisacorreo@gmail.com`; un trigger crea su perfil administrativo sin confiar en metadatos del navegador.
+- La identidad anónima se determina con el claim firmado `is_anonymous`; una sesión permanente jamás puede reclamar acceso de cliente.
 
 ### Cobros y libro financiero
 
@@ -150,7 +154,9 @@ Las funciones privilegiadas son `security definer` solo porque deben escribir ta
 
 ## Superficie de API y RLS
 
-La aplicación usará una sesión de Supabase Auth para toda petición. Administrador y vendedor tendrán usuario normal. El cliente obtendrá un usuario anónimo de Auth y una relación temporal en `client_access_sessions` después de presentar nombre y teléfono; la duración, revocación y mitigación de fuerza bruta se implementarán y probarán en la Tarea 1.5.
+La aplicación usa una sesión de Supabase Auth para toda petición. Administrador y vendedor tienen usuario permanente. El cliente obtiene un usuario anónimo de Auth y una relación temporal en `client_access_sessions` después de presentar nombre y teléfono. La sesión dura exactamente ocho horas desde `authenticated_at`; volver a presentar las mismas credenciales durante ese intervalo devuelve el vencimiento original y nunca lo extiende.
+
+El acceso limitado aplica dos barreras: cinco intentos por usuario anónimo en una ventana de quince minutos y el límite nativo de altas anónimas por IP de Supabase. La tabla de intentos tiene RLS habilitada, cero políticas y cero privilegios para roles de navegador; solamente `api.claim_client_access` puede operarla como función endurecida. CAPTCHA queda como endurecimiento previo a producción porque requiere elegir y configurar un proveedor y sus dominios.
 
 | Recurso                      | Administrador                | Vendedor                               | Cliente con sesión activa                         | `anon`   |
 | ---------------------------- | ---------------------------- | -------------------------------------- | ------------------------------------------------- | -------- |
@@ -163,6 +169,15 @@ La aplicación usará una sesión de Supabase Auth para toda petición. Administ
 | Transacciones y asientos     | Lee todos                    | Lee asientos de sus participaciones    | Lee asientos de su cuenta                         | Ninguno  |
 | Escritura financiera directa | Denegada                     | Denegada                               | Denegada                                          | Denegada |
 | `DELETE` operativo           | Denegado                     | Denegado                               | Denegado                                          | Denegado |
+
+RPC de identidad disponibles en la Tarea 1.5:
+
+| Función `api`                               | Actor autorizado     | Contrato                                                                                                                                   |
+| ------------------------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `get_current_access()`                      | `authenticated`      | Devuelve como máximo la identidad activa derivada por la base; no acepta un rol enviado por el frontend                                    |
+| `claim_client_access(text, text)`           | Usuario Auth anónimo | Normaliza nombre, valida teléfono E.164, limita intentos y crea o recupera la sesión de ocho horas sin revelar cuál credencial fue errónea |
+| `revoke_client_access()`                    | Cliente autenticado  | Marca la relación temporal como revocada antes de que el navegador elimine su sesión Auth local                                            |
+| Trigger `bootstrap_admin_profile()` interno | `auth.users`         | Crea el único perfil administrativo solo para el correo permanente autorizado                                                              |
 
 Controles obligatorios:
 
@@ -214,10 +229,21 @@ No se particionarán tablas durante el MVP. Se medirá antes de agregar índices
 9. Confirmar que vistas y funciones no filtran PII ni permiten enumerar tokens QR.
 10. Ejecutar asesores de seguridad y rendimiento de Supabase y resolver hallazgos antes del commit.
 
+## Pruebas de autenticación ejecutadas en la Tarea 1.5
+
+1. Verificar estructura, RLS y privilegios de los tres RPC mediante nueve aserciones pgTAP.
+2. Confirmar que credenciales válidas crean acceso y que el cliente solo ve su identidad activa.
+3. Repetir las credenciales durante la sesión y comprobar que `session_expires_at` no cambia.
+4. Revocar la sesión y comprobar en una sentencia posterior que la identidad deja de estar disponible.
+5. Comprobar respuesta genérica para credenciales inválidas, bloqueo en el quinto intento y rechazo de usuarios permanentes.
+6. Ejecutar la prueba funcional dentro de una transacción con `ROLLBACK`, sin conservar usuarios ni clientes de prueba.
+
 ## Fuentes técnicas verificadas
 
 - [Seguridad del Data API de Supabase](https://supabase.com/docs/guides/api/securing-your-api): esquemas dedicados, `GRANT`, RLS y revisión de funciones privilegiadas.
 - [Row Level Security de Supabase](https://supabase.com/docs/guides/database/postgres/row-level-security): políticas por rol, `auth.uid()`, vistas `security_invoker` e índices para RLS.
 - [Funciones de base de datos de Supabase](https://supabase.com/docs/guides/database/functions): `security invoker` por defecto y endurecimiento obligatorio de `security definer`.
 - [Cambio de exposición automática del Data API](https://supabase.com/changelog/45329-breaking-change-tables-not-exposed-to-data-and-graphql-api-automatically): las migraciones deben declarar privilegios explícitos.
+- [Usuarios anónimos de Supabase Auth](https://supabase.com/docs/guides/auth/auth-anonymous): rol PostgreSQL `authenticated`, claim `is_anonymous`, límites por IP y recomendación de CAPTCHA.
+- [Autenticación por contraseña](https://supabase.com/docs/guides/auth/passwords): acceso permanente del personal y recuperación por correo.
 - [Restricciones de PostgreSQL](https://www.postgresql.org/docs/current/ddl-constraints.html) y [bloqueo explícito](https://www.postgresql.org/docs/current/explicit-locking.html): integridad y orden de bloqueos concurrentes.

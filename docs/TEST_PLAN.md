@@ -30,6 +30,10 @@ Demostrar que los flujos funcionan, los permisos separan roles y ninguna combina
 
 ## Pruebas de permisos
 
+- Personal permanente accede únicamente con correo y contraseña; la recuperación no permite enumerar cuentas.
+- Cliente requiere un usuario Auth anónimo más nombre y teléfono válidos; una cuenta permanente no puede reclamar ese acceso.
+- La sesión del cliente vence exactamente a las ocho horas, un reingreso activo no la renueva y cerrar sesión la revoca antes de eliminar la sesión local.
+- Cinco intentos inválidos bloquean el acceso durante quince minutos y devuelven mensajes que no identifican cuál dato falló.
 - Cliente no lee ni modifica datos de otros clientes.
 - Vendedor solo opera su negocio y eventos asignados.
 - Administrador autorizado ejecuta operaciones administrativas.
@@ -73,6 +77,8 @@ pnpm exec supabase test db
 ```
 
 La Tarea 1.4 verificó además en el proyecto remoto, siempre con datos efímeros y `ROLLBACK`: 16/16 tablas con RLS, ausencia de escrituras directas, límites de monto, ledger inmutable, forma de recarga y visibilidad de administrador, vendedor y cliente.
+
+La Tarea 1.5 añadió nueve comprobaciones pgTAP y una prueba funcional remota reversible para creación, no renovación y revocación del acceso limitado. La configuración alojada de Auth y el usuario administrativo se validarán al resolver B-006.
 
 ## Puerta de despliegue
 

@@ -13,11 +13,12 @@
 - La documentación inicial está preparada, validada y versionada.
 - La aplicación React/Vite funciona localmente y tiene pruebas, herramientas de calidad y build de producción validados.
 - El proyecto Supabase `Cashless Acapulco` está activo y contiene el esquema físico versionado.
+- La autenticación por rol, la migración, el portal y la configuración alojada de Auth están implementados y validados.
 - `TISA OS Pilot` está pausado temporalmente por indicación expresa del responsable.
 
 ## Tarea activa
 
-No hay una tarea activa. La Tarea 1.4 está terminada; la Tarea 1.5 espera las decisiones P-001 y P-009 antes de comenzar.
+Ninguna mientras se publica el cierre de la Tarea 1.5 desde `feature/authentication-access`. La siguiente tarea autorizada será 1.6.
 
 ## Bitácora
 
@@ -139,9 +140,31 @@ Evidencia:
 - Rama: `feature/connect-supabase`.
 - GitHub CLI reautenticado correctamente como `tisacorreo-source` antes de publicar.
 
+### Tarea 1.5 — Implementar autenticación y acceso
+
+Estado: terminada.
+
+Evidencia acumulada:
+
+- D-024 y D-025 fijan correo/contraseña con recuperación para el personal y una sesión de cliente de ocho horas sin renovación.
+- La migración remota `20260730015644_implement_authentication_access.sql` añade control de intentos, claim anónimo, sesión exacta, revocación, bootstrap del administrador y tres RPC con privilegios mínimos.
+- El contrato pgTAP ejecutó nueve comprobaciones estructurales y de privilegios.
+- Una prueba funcional remota con `ROLLBACK` confirmó credenciales válidas, identidad visible, vencimiento inmutable, revocación efectiva y desaparición posterior del acceso.
+- Los asesores finales de seguridad y rendimiento no reportan hallazgos activos; los logs de Auth confirman invitación y alta anónima con HTTP 200, sin errores del flujo.
+- El frontend incorpora formularios separados para personal y cliente, recuperación/cambio de contraseña, mensajes genéricos y cierre seguro de sesión.
+- TypeScript, Oxlint, 13 pruebas y el build de producción están aprobados.
+- La interfaz fue validada en escritorio y 390×844 sin desbordamiento horizontal; personal, cliente y recuperación son navegables y accesibles.
+- `.env.local` contiene únicamente URL y llave publicable del proyecto y permanece ignorado por Git.
+- No se conservaron los usuarios o clientes temporales usados por las pruebas.
+- Auth alojado permite usuarios anónimos y exige confirmación de correo, cambio seguro de contraseña, mínimo de ocho caracteres y letras con números.
+- `http://localhost:5173` es el Site URL local y `http://127.0.0.1:5173/**` está en la lista de redirecciones permitidas.
+- Una llamada real con la llave publicable creó una sesión anónima válida; su usuario técnico exacto fue eliminado inmediatamente después de la prueba.
+- La invitación a `tisacorreo@gmail.com` creó un usuario Auth y el trigger generó el perfil único `admin`, activo y con nombre `Administrador TISA`.
+- El titular debe aceptar la invitación desde su correo y elegir la contraseña personal; esa acción no requiere almacenar ni compartir la credencial con el proyecto.
+
 ## Bloqueos activos
 
-- B-004 — La Tarea 1.5 requiere resolver P-001 y P-009 antes de implementar autenticación.
+Ninguno.
 
 ## Bloqueos resueltos
 
@@ -169,6 +192,18 @@ Impacto original: la organización no permitía crear otro proyecto activo en el
 
 Resolución: el responsable pidió pausar temporalmente `TISA OS Pilot`; se verificó el objetivo exacto, se pausó y se creó `Cashless Acapulco` sin costo mensual.
 
+### B-005 — Decisiones de autenticación
+
+Impacto original: P-001 y P-009 impedían definir credenciales administrativas y vigencia del acceso limitado del cliente.
+
+Resolución: el responsable confirmó correo/contraseña con recuperación para `tisacorreo@gmail.com` y una sesión de cliente de ocho horas sin renovación automática.
+
+### B-006 — Sesión autorizada de Supabase Dashboard
+
+Impacto original: impedía activar usuarios anónimos, configurar contraseñas y URLs, y crear al administrador inicial.
+
+Resolución: el titular inició sesión en el Dashboard; se activó y verificó Auth alojado, se registraron las URLs locales y se envió la invitación administrativa.
+
 ## Próxima acción
 
-Resolver con el responsable el mecanismo y recuperación de la cuenta administrativa (P-001), además de la duración y renovación de la sesión temporal del cliente (P-009). Después iniciar la Tarea 1.5 desde `main` actualizado.
+Publicar el cierre de la Tarea 1.5 y, solo después, iniciar la Tarea 1.6 para navegación y estructura visual por rol.

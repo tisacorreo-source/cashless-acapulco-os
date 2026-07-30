@@ -9,13 +9,14 @@ Este archivo es el índice vivo del repositorio. Si una persona llega por primer
 | Campo                  | Estado                                                                                                |
 | ---------------------- | ----------------------------------------------------------------------------------------------------- |
 | Fase                   | Entrega 1 — Base funcional local                                                                      |
-| Última tarea terminada | Tarea 1.4 — Conectar Supabase                                                                         |
-| Tarea en curso         | Ninguna; la Tarea 1.4 está terminada                                                                  |
-| Próxima tarea          | Tarea 1.5 — Resolver decisiones de autenticación e implementar acceso                                 |
-| Código funcional       | Portada técnica local validada                                                                        |
+| Última tarea terminada | Tarea 1.5 — Implementar autenticación y acceso                                                        |
+| Tarea en curso         | Ninguna; la Tarea 1.5 está en cierre de publicación                                                   |
+| Próxima tarea          | Tarea 1.6 — Crear navegación y estructura visual                                                      |
+| Código funcional       | Portal de acceso por rol conectado y Auth alojado validado                                            |
 | Repositorio remoto     | [`tisacorreo-source/cashless-acapulco-os`](https://github.com/tisacorreo-source/cashless-acapulco-os) |
 | Despliegue             | Aún no realizado                                                                                      |
-| Bloqueo conocido       | La Tarea 1.5 espera definir credencial/recuperación administrativa y duración de sesión del cliente   |
+| Bloqueo conocido       | Ninguno                                                                                               |
+| Acción del titular     | Aceptar la invitación de Supabase recibida en `tisacorreo@gmail.com` y elegir su contraseña           |
 
 El detalle y la bitácora se mantienen en [`docs/STATUS.md`](docs/STATUS.md).
 
@@ -50,7 +51,12 @@ El detalle y la bitácora se mantienen en [`docs/STATUS.md`](docs/STATUS.md).
 ├── pnpm-workspace.yaml          # Políticas de Node, supply chain y peers
 ├── src/
 │   ├── App.test.tsx             # Prueba base de interfaz y accesibilidad
-│   ├── App.tsx                  # Portada técnica de la aplicación
+│   ├── App.tsx                  # Portada técnica y punto de entrada al acceso
+│   ├── features/auth/
+│   │   ├── AccessPortal.test.tsx # Pruebas de formularios y recorridos por rol
+│   │   ├── AccessPortal.tsx     # Portal de personal, cliente y recuperación
+│   │   ├── access.test.ts       # Pruebas de normalización y contraseña
+│   │   └── access.ts            # Servicio de Supabase Auth y RPC de acceso
 │   ├── lib/
 │   │   ├── supabase.test.ts     # Pruebas de configuración pública segura
 │   │   └── supabase.ts          # Cliente Supabase lazy, tipado y limitado a api
@@ -63,12 +69,16 @@ El detalle y la bitácora se mantienen en [`docs/STATUS.md`](docs/STATUS.md).
 │   ├── .gitignore               # Estado local de Supabase excluido de Git
 │   ├── config.toml              # Configuración local; sólo api queda expuesto
 │   ├── migrations/
-│   │   └── 20260730011421_create_cashless_schema.sql
-│   │                               # Esquema físico, índices, RLS e invariantes
+│   │   ├── 20260730011421_create_cashless_schema.sql
+│   │   │                           # Esquema físico, índices, RLS e invariantes
+│   │   └── 20260730015644_implement_authentication_access.sql
+│   │                               # Roles, sesiones de ocho horas, intentos y RPC
 │   ├── seed.sql                 # Punto de entrada reservado para datos demo
 │   └── tests/database/
-│       └── 0001_schema_contract.test.sql
-│                                   # Contrato pgTAP de estructura y privilegios
+│       ├── 0001_schema_contract.test.sql
+│       │                           # Contrato pgTAP de estructura y privilegios
+│       └── 0002_authentication_contract.test.sql
+│                                   # Contrato pgTAP de autenticación y acceso
 ├── tsconfig.app.json            # TypeScript para la aplicación
 ├── tsconfig.json                # Referencias TypeScript del proyecto
 ├── tsconfig.node.json           # TypeScript para configuración y tooling
@@ -152,7 +162,7 @@ pnpm check         # Ejecuta todas las validaciones y el build
 
 ## Supabase, migraciones y datos demo
 
-El proyecto remoto activo es `Cashless Acapulco` (`ypeabqwaragnnavvmgyg`). La aplicación sólo expone el esquema `api`; las tablas del esquema `cashless` se consumen mediante vistas y RPC revisadas conforme se implementen.
+El proyecto remoto activo es `Cashless Acapulco` (`ypeabqwaragnnavvmgyg`). La aplicación sólo expone el esquema `api`; las tablas del esquema `cashless` se consumen mediante vistas y RPC revisadas conforme se implementen. Las dos migraciones del repositorio están aplicadas en el historial remoto.
 
 Con Docker disponible, el flujo local reproducible es:
 
@@ -166,7 +176,7 @@ Crear una migración únicamente mediante `pnpm exec supabase migration new <nom
 
 ## Pruebas
 
-La base incluye pruebas de interfaz y configuración pública, además de un contrato pgTAP para el esquema remoto. La estrategia y los escenarios financieros obligatorios están definidos en [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md). Cada tarea funcional deberá ampliar y ejecutar sus pruebas antes de cerrarse.
+La base incluye 13 pruebas de interfaz, normalización y configuración pública, además de contratos pgTAP para el esquema y la autenticación remotos. La estrategia y los escenarios financieros obligatorios están definidos en [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md). Cada tarea funcional deberá ampliar y ejecutar sus pruebas antes de cerrarse.
 
 ## Despliegue
 

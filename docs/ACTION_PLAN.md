@@ -23,7 +23,7 @@
 | 1.2 Crear repositorio GitHub público         | Terminada | Remoto accesible, `main` funcional, README visible, sin secretos                        |
 | 1.3 Diseñar modelo de datos físico           | Terminada | Entidades, restricciones, transacciones, RLS y movimientos documentados antes de tablas |
 | 1.4 Conectar Supabase                        | Terminada | Migraciones versionadas aplicadas, tipos generados, RLS y conexión probados             |
-| 1.5 Implementar autenticación y acceso       | Bloqueada | Roles separados, teléfono único, acceso limitado y pruebas de permisos                  |
+| 1.5 Implementar autenticación y acceso       | Terminada | Roles separados, teléfono único, acceso limitado y pruebas de permisos                  |
 | 1.6 Crear navegación y estructura visual     | Pendiente | Vistas mobile-first funcionales para los tres roles                                     |
 
 ## Entrega 2 — Operación cashless
@@ -57,4 +57,4 @@
 
 No avanzar si hay errores activos, pruebas fallidas, documentación desactualizada, secretos, permisos incorrectos, inconsistencias de saldo o una decisión bloqueante. El avance no requiere confirmación rutinaria del responsable; sí la requiere para accesos, acciones sensibles o destructivas y promoción a producción.
 
-La Tarea 1.5 se desbloquea al resolver P-001 y P-009 en `docs/DECISIONS.md`.
+P-001 y P-009 se resolvieron como D-024 y D-025 antes de iniciar la Tarea 1.5.
