@@ -3,11 +3,11 @@ import { type FormEvent, useEffect, useMemo, useState } from 'react'
 import {
   AccessError,
   type AccessIdentity,
+  type AccessMode,
   type AccessService,
   createAccessService,
+  readAuthRedirectState,
 } from './access.ts'
-
-type AccessMode = 'client' | 'recovery' | 'staff' | 'update-password'
 
 interface AccessPortalProps {
   service?: AccessService
@@ -18,12 +18,6 @@ const roleLabels = {
   client: 'Cliente',
   seller: 'Punto de venta',
 } as const
-
-function getInitialMode(): AccessMode {
-  return new URLSearchParams(window.location.search).get('auth') === 'recovery'
-    ? 'update-password'
-    : 'staff'
-}
 
 function getErrorMessage(error: unknown): string {
   return error instanceof AccessError
@@ -40,15 +34,16 @@ function formatExpiry(value: string): string {
 }
 
 export function AccessPortal({ service }: AccessPortalProps) {
+  const authRedirect = useMemo(readAuthRedirectState, [])
   const accessService = useMemo(
     () => service ?? createAccessService(),
     [service],
   )
-  const [mode, setMode] = useState<AccessMode>(getInitialMode)
+  const [mode, setMode] = useState<AccessMode>(authRedirect.mode)
   const [identity, setIdentity] = useState<AccessIdentity | null>(null)
   const [pending, setPending] = useState(true)
-  const [error, setError] = useState('')
-  const [notice, setNotice] = useState('')
+  const [error, setError] = useState(authRedirect.error)
+  const [notice, setNotice] = useState(authRedirect.notice)
 
   useEffect(() => {
     let active = true
@@ -58,7 +53,7 @@ export function AccessPortal({ service }: AccessPortalProps) {
       try {
         const currentIdentity = await accessService.getCurrentAccess()
 
-        if (active) {
+        if (active && authRedirect.mode !== 'update-password') {
           setIdentity(currentIdentity)
         }
       } catch (restoreError) {
@@ -90,7 +85,7 @@ export function AccessPortal({ service }: AccessPortalProps) {
       active = false
       unsubscribe()
     }
-  }, [accessService])
+  }, [accessService, authRedirect.mode])
 
   function selectMode(nextMode: AccessMode) {
     setMode(nextMode)
@@ -174,7 +169,14 @@ export function AccessPortal({ service }: AccessPortalProps) {
 
     try {
       await accessService.updatePassword(password)
-      setNotice('Contraseña actualizada. Ya puedes continuar con tu sesión.')
+      const currentIdentity = await accessService.getCurrentAccess()
+
+      if (currentIdentity) {
+        setIdentity(currentIdentity)
+      } else {
+        setMode('staff')
+        setNotice('Contraseña actualizada. Ya puedes iniciar sesión.')
+      }
     } catch (passwordError) {
       setError(getErrorMessage(passwordError))
     } finally {

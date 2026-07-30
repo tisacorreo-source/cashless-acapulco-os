@@ -16,7 +16,7 @@ Este archivo es el índice vivo del repositorio. Si una persona llega por primer
 | Repositorio remoto     | [`tisacorreo-source/cashless-acapulco-os`](https://github.com/tisacorreo-source/cashless-acapulco-os)                                       |
 | Despliegue             | Aún no realizado                                                                                                                            |
 | Bloqueo conocido       | Ninguno                                                                                                                                     |
-| Acción del titular     | Aceptar la invitación de Supabase recibida en `tisacorreo@gmail.com` y elegir su contraseña                                                 |
+| Acción del titular     | Abrir el correo de recuperación más reciente enviado a `tisacorreo@gmail.com` y elegir su contraseña                                        |
 
 El detalle y la bitácora se mantienen en [`docs/STATUS.md`](docs/STATUS.md).
 
@@ -176,7 +176,7 @@ Crear una migración únicamente mediante `pnpm exec supabase migration new <nom
 
 ## Pruebas
 
-La base incluye 13 pruebas de interfaz, normalización y configuración pública, además de contratos pgTAP para el esquema y la autenticación remotos. La estrategia y los escenarios financieros obligatorios están definidos en [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md). Cada tarea funcional deberá ampliar y ejecutar sus pruebas antes de cerrarse.
+La base incluye 16 pruebas de interfaz, redirecciones Auth, normalización y configuración pública, además de contratos pgTAP para el esquema y la autenticación remotos. La estrategia y los escenarios financieros obligatorios están definidos en [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md). Cada tarea funcional deberá ampliar y ejecutar sus pruebas antes de cerrarse.
 
 ## Despliegue
 

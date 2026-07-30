@@ -3,6 +3,13 @@ import type { AuthChangeEvent, Session } from '@supabase/supabase-js'
 import { getSupabaseClient } from '../../lib/supabase.ts'
 
 export type AccessRole = 'admin' | 'client' | 'seller'
+export type AccessMode = 'client' | 'recovery' | 'staff' | 'update-password'
+
+export interface AuthRedirectState {
+  error: string
+  mode: AccessMode
+  notice: string
+}
 
 export interface AccessIdentity {
   businessPublicId: string | null
@@ -46,6 +53,44 @@ export class AccessError extends Error {
     this.name = 'AccessError'
     this.code = code
   }
+}
+
+export function readAuthRedirectState(
+  location: Pick<Location, 'hash' | 'search'> = window.location,
+): AuthRedirectState {
+  const search = new URLSearchParams(location.search)
+  const hash = new URLSearchParams(location.hash.replace(/^#/u, ''))
+  const errorCode = hash.get('error_code')
+
+  if (errorCode) {
+    const isExpired = ['invite_not_found', 'otp_expired'].includes(errorCode)
+
+    return {
+      error: isExpired
+        ? 'El enlace ya venció o fue utilizado. Solicita un correo nuevo para crear tu contraseña.'
+        : 'No fue posible validar el enlace. Solicita un correo nuevo e inténtalo nuevamente.',
+      mode: 'recovery',
+      notice: '',
+    }
+  }
+
+  if (hash.get('type') === 'invite') {
+    return {
+      error: '',
+      mode: 'update-password',
+      notice: 'Invitación aceptada. Crea tu contraseña para continuar.',
+    }
+  }
+
+  if (search.get('auth') === 'recovery' || hash.get('type') === 'recovery') {
+    return {
+      error: '',
+      mode: 'update-password',
+      notice: 'Crea una contraseña nueva para recuperar tu acceso.',
+    }
+  }
+
+  return { error: '', mode: 'staff', notice: '' }
 }
 
 export function normalizeAccessName(value: string): string {

@@ -1,8 +1,12 @@
-import { render, screen } from '@testing-library/react'
+import { cleanup, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import type { AccessIdentity, AccessService } from './access.ts'
+import {
+  type AccessIdentity,
+  type AccessService,
+  readAuthRedirectState,
+} from './access.ts'
 import { AccessPortal } from './AccessPortal.tsx'
 
 const adminIdentity: AccessIdentity = {
@@ -27,6 +31,33 @@ function createFakeService(
     ...overrides,
   }
 }
+
+afterEach(() => {
+  cleanup()
+  window.history.replaceState(null, '', '/')
+})
+
+describe('redirecciones de Auth', () => {
+  it('lleva una invitación válida a la creación de contraseña', () => {
+    expect(readAuthRedirectState({ hash: '#type=invite', search: '' })).toEqual(
+      {
+        error: '',
+        mode: 'update-password',
+        notice: 'Invitación aceptada. Crea tu contraseña para continuar.',
+      },
+    )
+  })
+
+  it('convierte un enlace vencido en una recuperación accionable', () => {
+    const state = readAuthRedirectState({
+      hash: '#error=access_denied&error_code=otp_expired',
+      search: '',
+    })
+
+    expect(state.mode).toBe('recovery')
+    expect(state.error).toMatch(/venció o fue utilizado/i)
+  })
+})
 
 describe('AccessPortal', () => {
   it('separa el acceso de personal y cliente e informa la vigencia temporal', async () => {
@@ -82,6 +113,32 @@ describe('AccessPortal', () => {
 
     expect(
       await screen.findByText(/si el correo está registrado/i),
+    ).toBeInTheDocument()
+  })
+
+  it('permite crear contraseña desde una invitación y conserva la sesión administrativa', async () => {
+    window.history.replaceState(null, '', '/#type=invite')
+    const user = userEvent.setup()
+    const service = createFakeService({
+      getCurrentAccess: vi.fn().mockResolvedValue(adminIdentity),
+    })
+
+    render(<AccessPortal service={service} />)
+
+    expect(
+      await screen.findByRole('heading', { name: /nueva contraseña/i }),
+    ).toBeInTheDocument()
+    expect(screen.getByText(/invitación aceptada/i)).toBeInTheDocument()
+
+    await user.type(screen.getByLabelText('Contraseña nueva'), 'segura123')
+    await user.type(screen.getByLabelText('Confirmar contraseña'), 'segura123')
+    await user.click(
+      screen.getByRole('button', { name: /guardar contraseña/i }),
+    )
+
+    expect(service.updatePassword).toHaveBeenCalledWith('segura123')
+    expect(
+      await screen.findByRole('heading', { name: 'TISA' }),
     ).toBeInTheDocument()
   })
 })

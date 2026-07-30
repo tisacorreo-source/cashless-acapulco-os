@@ -152,7 +152,7 @@ Evidencia acumulada:
 - Una prueba funcional remota con `ROLLBACK` confirmó credenciales válidas, identidad visible, vencimiento inmutable, revocación efectiva y desaparición posterior del acceso.
 - Los asesores finales de seguridad y rendimiento no reportan hallazgos activos; los logs de Auth confirman invitación y alta anónima con HTTP 200, sin errores del flujo.
 - El frontend incorpora formularios separados para personal y cliente, recuperación/cambio de contraseña, mensajes genéricos y cierre seguro de sesión.
-- TypeScript, Oxlint, 13 pruebas y el build de producción están aprobados.
+- TypeScript, Oxlint, 16 pruebas y el build de producción están aprobados.
 - La interfaz fue validada en escritorio y 390×844 sin desbordamiento horizontal; personal, cliente y recuperación son navegables y accesibles.
 - `.env.local` contiene únicamente URL y llave publicable del proyecto y permanece ignorado por Git.
 - No se conservaron los usuarios o clientes temporales usados por las pruebas.
@@ -160,7 +160,10 @@ Evidencia acumulada:
 - `http://localhost:5173` es el Site URL local y `http://127.0.0.1:5173/**` está en la lista de redirecciones permitidas.
 - Una llamada real con la llave publicable creó una sesión anónima válida; su usuario técnico exacto fue eliminado inmediatamente después de la prueba.
 - La invitación a `tisacorreo@gmail.com` creó un usuario Auth y el trigger generó el perfil único `admin`, activo y con nombre `Administrador TISA`.
-- El titular debe aceptar la invitación desde su correo y elegir la contraseña personal; esa acción no requiere almacenar ni compartir la credencial con el proyecto.
+- El primer clic de la invitación confirmó el correo y creó la sesión administrativa; los clics posteriores devolvieron `otp_expired` porque el enlace era de un solo uso y el servidor local todavía no estaba activo.
+- El frontend ahora reconoce invitaciones y recuperaciones válidas, dirige a la creación de contraseña y convierte enlaces vencidos en un recorrido de recuperación accionable.
+- El servidor local responde con HTTP 200 en `http://localhost:5173`; se envió un correo de recuperación nuevo a `tisacorreo@gmail.com` y los logs de Auth confirmaron `/recover` y `mail.send` sin error.
+- El titular debe abrir el correo de recuperación más reciente mientras el servidor local siga activo y elegir la contraseña personal; esa acción no requiere almacenar ni compartir la credencial con el proyecto.
 - Rama publicada: `feature/authentication-access`.
 - Commit funcional: `9787fbb` (`feat: implement authentication access`).
 - Revisión abierta: PR borrador [#3 — feat: implement authentication access](https://github.com/tisacorreo-source/cashless-acapulco-os/pull/3).
