@@ -15,18 +15,18 @@ Demostrar que los flujos funcionan, los permisos separan roles y ninguna combina
 
 ## Casos financieros obligatorios
 
-| Flujo        | Caso esperado                               | Casos de rechazo o recuperación                  |
-| ------------ | ------------------------------------------- | ------------------------------------------------ |
-| Registro     | Crea cliente y registra responsable         | Teléfono duplicado, campos inválidos             |
-| Recarga      | Aumenta saldo e inserta movimiento          | Cero, negativo, error intermedio, doble envío    |
-| QR           | Crea cobro pendiente con expiración         | Monto inválido, negocio fuera del evento         |
-| Compra       | Débito, crédito, venta y QR pagado atómicos | Saldo insuficiente, vencido, usado, cancelado    |
-| Concurrencia | Solo una confirmación gana                  | Dos confirmaciones simultáneas no duplican venta |
-| Cancelación  | Compensa ambos saldos y conserva venta      | Doble reversión, permisos incorrectos            |
-| Retiro       | Reduce saldo y registra anterior/posterior  | Superior al saldo, cero, negativo                |
-| Liquidación  | Reduce pendiente por evento                 | Superior al pendiente, negocio/evento incorrecto |
-| CSV          | Campos, totales y codificación correctos    | Sin datos, caracteres especiales, filtros        |
-| Demo         | Inserta una sola vez y limpia solo demo     | Ejecución repetida y datos reales coexistentes   |
+| Flujo        | Caso esperado                                    | Casos de rechazo o recuperación                                |
+| ------------ | ------------------------------------------------ | -------------------------------------------------------------- |
+| Registro     | Crea cliente y registra responsable              | Teléfono o correo duplicado, campos inválidos                  |
+| Recarga      | Aumenta saldo, exige evento e inserta movimiento | Fuera de $50–$1,000, sin evento, error intermedio, doble envío |
+| QR           | Crea cobro pendiente con expiración              | Fuera de $50–$1,000, negocio fuera del evento                  |
+| Compra       | Débito, crédito, venta y QR pagado atómicos      | Saldo insuficiente, vencido, usado, cancelado                  |
+| Concurrencia | Solo una confirmación gana                       | Dos confirmaciones simultáneas no duplican venta               |
+| Cancelación  | Compensa saldos; admite deuda posliquidación     | Doble reversión, permisos incorrectos                          |
+| Retiro       | Reduce saldo y registra anterior/posterior       | Fuera de $50–$1,000 o superior al saldo                        |
+| Liquidación  | Reduce pendiente positivo por evento             | Fuera de límites, deuda o superior al pendiente                |
+| CSV          | Campos, totales y codificación correctos         | Sin datos, caracteres especiales, filtros                      |
+| Demo         | Inserta una sola vez y limpia solo demo          | Ejecución repetida y datos reales coexistentes                 |
 
 ## Pruebas de permisos
 
@@ -36,6 +36,18 @@ Demostrar que los flujos funcionan, los permisos separan roles y ninguna combina
 - Usuario anónimo no consulta tablas operativas directamente salvo la superficie explícitamente diseñada.
 - Frontend no contiene ni utiliza claves secretas.
 - Las políticas se prueban con roles distintos; no basta revisar SQL.
+
+## Casos físicos y de frontera
+
+- Teléfonos nacionales e internacionales se normalizan a E.164; equivalentes nacionales colisionan con la misma clave única.
+- Correos de cliente nulos se aceptan; correos equivalentes por mayúsculas o espacios se rechazan como duplicados.
+- Para cada operación: 4999 centavos se rechaza, 5000 se acepta, 100000 se acepta y 100001 se rechaza.
+- Varias operaciones válidas pueden elevar el saldo acumulado por encima de $1,000 MXN.
+- Una recarga sin `event_id` se rechaza y nunca selecciona el evento automáticamente.
+- Dos confirmaciones simultáneas del mismo QR producen una venta; dos débitos simultáneos nunca sobregiran al cliente.
+- Un reintento con la misma idempotencia devuelve el resultado original; cambiar la carga con la misma clave falla.
+- Cancelar una venta ya liquidada puede dejar deuda negocio–evento, que ventas nuevas amortizan antes de permitir otra liquidación.
+- Operaciones, transacciones y asientos rechazan actualización y borrado directo.
 
 ## Validación visual
 

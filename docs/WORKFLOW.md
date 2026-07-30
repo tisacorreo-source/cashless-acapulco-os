@@ -2,7 +2,7 @@
 
 ## Principios
 
-- GitHub será la fuente remota de verdad cuando se cree el repositorio.
+- GitHub es la fuente remota de verdad: `tisacorreo-source/cashless-acapulco-os`.
 - `main` debe permanecer funcional y desplegable.
 - Cada tarea se ejecuta y valida de forma aislada.
 - La documentación cambia junto con el código que describe.

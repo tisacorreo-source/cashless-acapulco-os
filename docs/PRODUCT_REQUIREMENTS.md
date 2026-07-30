@@ -12,7 +12,7 @@ Durante el MVP existirá una sola cuenta. Accederá con usuario y contraseña o 
 
 ### Cliente
 
-Se registra en un punto autorizado con nombre, teléfono y correo. El teléfono es único. Accede con nombre y teléfono como limitación aceptada del MVP. Puede consultar saldo e historial, escanear un QR, revisar el cobro, confirmar una compra y solicitar un retiro presencial.
+Se registra en un punto autorizado con nombre, teléfono y correo opcional. El teléfono E.164 es único y el correo, cuando existe, también es único sin distinguir mayúsculas. Accede con nombre y teléfono como limitación aceptada del MVP. Puede consultar saldo e historial, escanear un QR, revisar el cobro, confirmar una compra y solicitar un retiro presencial.
 
 ### Negocio
 
@@ -24,15 +24,16 @@ Se registra con nombre y correo. Un usuario por negocio accede con correo y cont
 
 1. El administrador registra o localiza al cliente.
 2. Captura el efectivo recibido y confirma la operación.
-3. El sistema valida que el monto sea mayor que cero.
+3. El sistema valida un monto entre $50 y $1,000 MXN, con precisión de centavos.
 4. Registra saldo anterior, importe, saldo posterior, fecha, evento y responsable.
 5. Aumenta el saldo general del cliente dentro de la misma transacción.
 
-No existen límites mínimos o máximos para el MVP.
+Cada recarga exige seleccionar expresamente un evento existente. El sistema no elige un evento por fecha o estado y no existe un límite máximo para el saldo acumulado.
 
 ### Eventos
 
 - Cada evento tiene nombre, fechas y estado `activo` o `cerrado`.
+- Los instantes se almacenan en UTC y se muestran con la zona `America/Mexico_City`.
 - Un negocio puede participar en varios eventos.
 - Las operaciones guardan el evento aplicable.
 - El saldo del cliente se conserva entre eventos.
@@ -40,7 +41,7 @@ No existen límites mínimos o máximos para el MVP.
 
 ### Cobro y compra
 
-1. El vendedor captura monto positivo y descripción libre.
+1. El vendedor captura un monto entre $50 y $1,000 MXN y una descripción libre.
 2. El sistema crea una solicitud con identificador, negocio, evento, creación, expiración y estado.
 3. El QR vence aproximadamente cinco minutos después de su creación.
 4. El cliente ve negocio, descripción, importe, evento y saldo disponible.
@@ -56,20 +57,22 @@ Estados de solicitud: `pendiente`, `pagado`, `vencido`, `cancelado`.
 - Devuelve saldo al cliente y reduce el saldo del negocio de forma atómica.
 - Conserva la venta original y crea una reversión relacionada.
 - No admite doble reversión.
+- Si la venta ya fue liquidada, la reversión puede dejar una deuda en el saldo negocio–evento; las ventas posteriores la amortizan antes de generar un importe liquidable.
 
 ### Retiro de cliente
 
 - Solo lo procesa el administrador en el punto autorizado.
 - Muestra saldo actual, monto y saldo restante antes de confirmar.
-- No admite cero, negativos ni importes superiores al saldo.
+- Admite montos entre $50 y $1,000 MXN y nunca importes superiores al saldo.
 - Registra saldos anterior y posterior.
 
 ### Liquidación de negocio
 
 - Se seleccionan negocio y evento.
 - Se muestran bruto vendido, cancelaciones, liquidaciones previas y saldo pendiente.
-- El importe debe ser positivo y no superar el saldo pendiente.
+- El importe debe estar entre $50 y $1,000 MXN y no superar un saldo pendiente positivo.
 - Una liquidación total deja el saldo en cero, sin impedir ventas posteriores.
+- Un saldo negativo representa deuda y no puede liquidarse hasta volver a ser positivo.
 
 ### Historiales
 
@@ -97,6 +100,7 @@ Un administrador, tres negocios, cinco clientes, un evento activo, recargas, ven
 - Mobile-first, usable también en escritorio.
 - Interfaz inicial en español y montos en pesos mexicanos.
 - Operaciones financieras atómicas e idempotentes.
+- Montos monetarios como centavos enteros, sin punto flotante; límites por operación, no por saldo acumulado.
 - Historial inmutable; no se eliminan movimientos.
 - RLS y autorización por rol probadas.
 - Sin secretos en frontend, documentación, logs o Git.

@@ -9,13 +9,13 @@ Este archivo es el índice vivo del repositorio. Si una persona llega por primer
 | Campo                  | Estado                                                                                                |
 | ---------------------- | ----------------------------------------------------------------------------------------------------- |
 | Fase                   | Entrega 1 — Base funcional local                                                                      |
-| Última tarea terminada | Tarea 1.2 — Crear repositorio GitHub público                                                          |
-| Tarea en curso         | Ninguna; la Tarea 1.3 espera definiciones de producto                                                 |
-| Próxima tarea          | Resolver P-002 a P-007 y diseñar el modelo de datos físico                                            |
+| Última tarea terminada | Tarea 1.3 — Diseñar modelo de datos físico                                                            |
+| Tarea en curso         | Ninguna; la Tarea 1.3 está terminada                                                                  |
+| Próxima tarea          | Tarea 1.4 — Conectar Supabase y convertir el contrato físico en migraciones                           |
 | Código funcional       | Portada técnica local validada                                                                        |
 | Repositorio remoto     | [`tisacorreo-source/cashless-acapulco-os`](https://github.com/tisacorreo-source/cashless-acapulco-os) |
 | Despliegue             | Aún no realizado                                                                                      |
-| Bloqueo conocido       | Decisiones funcionales y financieras previas al diseño físico                                         |
+| Bloqueo conocido       | Ninguno en la tarea actual; crear o elegir Supabase requiere el control externo aplicable             |
 
 El detalle y la bitácora se mantienen en [`docs/STATUS.md`](docs/STATUS.md).
 
@@ -36,7 +36,7 @@ El detalle y la bitácora se mantienen en [`docs/STATUS.md`](docs/STATUS.md).
 ├── README.md                    # Índice principal y guía de entrada
 ├── docs/
     ├── ACTION_PLAN.md           # Plan secuencial y estado por tarea
-    ├── DATA_MODEL.md            # Modelo conceptual e invariantes financieras
+    ├── DATA_MODEL.md            # Esquema físico, transacciones, índices y RLS
     ├── DECISIONS.md             # Decisiones tomadas y asuntos pendientes
     ├── DEPLOYMENT.md            # Estrategia local, preview y producción
     ├── ENVIRONMENT.md           # Inventario verificado del entorno y conexiones
@@ -67,7 +67,7 @@ El índice debe actualizarse en el mismo commit que agregue, elimine o cambie el
 ## Alcance del MVP
 
 - Un administrador con control operativo general.
-- Clientes registrados por nombre, teléfono único y correo.
+- Clientes registrados por nombre, teléfono único y correo opcional único cuando exista.
 - Negocios con un usuario vendedor por negocio.
 - Eventos recurrentes y participación de negocios por evento.
 - Saldo general del cliente, conservado entre eventos.
@@ -165,7 +165,7 @@ El flujo será local → rama de trabajo → GitHub → preview de Vercel → pr
 | [`docs/PRODUCT_REQUIREMENTS.md`](docs/PRODUCT_REQUIREMENTS.md) | Requisitos del MVP y reglas operativas                |
 | [`docs/DECISIONS.md`](docs/DECISIONS.md)                       | Decisiones, motivos y preguntas aún abiertas          |
 | [`docs/ACTION_PLAN.md`](docs/ACTION_PLAN.md)                   | Secuencia completa de ejecución y criterios de cierre |
-| [`docs/DATA_MODEL.md`](docs/DATA_MODEL.md)                     | Modelo conceptual y restricciones financieras         |
+| [`docs/DATA_MODEL.md`](docs/DATA_MODEL.md)                     | Esquema físico, transacciones, índices y RLS          |
 | [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md)                       | Pruebas funcionales, financieras y de seguridad       |
 | [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)                     | Entornos, variables, publicación y rollback           |
 | [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md)                   | Herramientas y conexiones comprobadas                 |
