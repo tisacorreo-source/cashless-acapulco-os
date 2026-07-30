@@ -11,11 +11,13 @@
 - Node.js no está en el `PATH` del sistema, pero existe un runtime LTS utilizable en el entorno de trabajo.
 - El repositorio Git local está inicializado en `main` y vinculado al remoto público de GitHub.
 - La documentación inicial está preparada, validada y versionada.
-- La aplicación React/Vite funciona localmente y tiene una prueba base, herramientas de calidad y build de producción validados.
+- La aplicación React/Vite funciona localmente y tiene pruebas, herramientas de calidad y build de producción validados.
+- El proyecto Supabase `Cashless Acapulco` está activo y contiene el esquema físico versionado.
+- `TISA OS Pilot` está pausado temporalmente por indicación expresa del responsable.
 
 ## Tarea activa
 
-No hay una tarea activa. La Tarea 1.3 está cerrada y fusionada en `main`; la siguiente será la Tarea 1.4.
+No hay una tarea activa. La Tarea 1.4 está terminada; la Tarea 1.5 espera las decisiones P-001 y P-009 antes de comenzar.
 
 ## Bitácora
 
@@ -115,9 +117,31 @@ Evidencia:
 - Pull request fusionado: [#1 — docs: define physical data model](https://github.com/tisacorreo-source/cashless-acapulco-os/pull/1).
 - Commit en `main`: `dbc6ea4 docs: define physical data model`.
 
+### Tarea 1.4 — Conectar Supabase
+
+Estado: terminada.
+
+Evidencia:
+
+- `TISA OS Pilot` (`sgvjpuzazumhlxrbaffg`) se pausó de forma reversible por solicitud expresa para liberar el cupo del plan gratuito.
+- Se confirmó un costo de USD 0 mensual y se creó `Cashless Acapulco` (`ypeabqwaragnnavvmgyg`) en `us-east-1`; estado final `ACTIVE_HEALTHY`.
+- Supabase JS 2.111.0 y CLI 2.110.0 quedaron fijados en `package.json` y el lockfile.
+- La migración `20260730011421_create_cashless_schema.sql` crea 16 tablas internas, índices de relaciones y consulta, ledger inmutable, validador diferido, RLS y privilegios explícitos.
+- El Data API queda limitado a `api`; `public` no contiene tablas de aplicación y `cashless` no está expuesto.
+- La migración completa pasó primero dentro de una transacción con `ROLLBACK` y después se aplicó mediante el historial remoto de migraciones.
+- El contrato pgTAP ejecutó 39 comprobaciones de esquemas, tablas, RLS, funciones y privilegios.
+- Catálogos remotos confirmaron 16/16 tablas con RLS, 0 privilegios para `anon`, 0 escrituras directas para `authenticated`, 0 claves foráneas sin índice y 3/3 helpers endurecidos.
+- Pruebas efímeras con `ROLLBACK` aprobaron fronteras de 5000 y 100000 centavos, rechazo exterior, recarga con forma válida, ledger append-only y visibilidad diferenciada de administrador, vendedor y cliente.
+- El asesor de seguridad devolvió cero hallazgos. El asesor de rendimiento sólo marcó índices sin uso, resultado esperado con todas las tablas vacías.
+- Se generó el contrato TypeScript de la superficie Data API y se añadió un cliente lazy que rechaza configuración ausente o HTTP remoto.
+- `pnpm check` aprobó formato, lint, tipos, 5 pruebas y build de producción.
+- No se conservaron datos de prueba ni secretos en el proyecto o el repositorio.
+- Rama: `feature/connect-supabase`.
+- GitHub CLI reautenticado correctamente como `tisacorreo-source` antes de publicar.
+
 ## Bloqueos activos
 
-Ninguno.
+- B-004 — La Tarea 1.5 requiere resolver P-001 y P-009 antes de implementar autenticación.
 
 ## Bloqueos resueltos
 
@@ -139,6 +163,12 @@ Impacto original: impedía elegir restricciones de identidad, fechas y dinero si
 
 Resolución: el responsable confirmó E.164, correo opcional único, zona horaria, centavos y límites, selección obligatoria de evento y deuda por reversión posliquidación.
 
+### B-004 — Capacidad gratuita de proyectos Supabase
+
+Impacto original: la organización no permitía crear otro proyecto activo en el plan gratuito.
+
+Resolución: el responsable pidió pausar temporalmente `TISA OS Pilot`; se verificó el objetivo exacto, se pausó y se creó `Cashless Acapulco` sin costo mensual.
+
 ## Próxima acción
 
-Iniciar la Tarea 1.4 inspeccionando primero los proyectos Supabase disponibles y el control de costo antes de crear o modificar recursos.
+Resolver con el responsable el mecanismo y recuperación de la cuenta administrativa (P-001), además de la duración y renovación de la sesión temporal del cliente (P-009). Después iniciar la Tarea 1.5 desde `main` actualizado.

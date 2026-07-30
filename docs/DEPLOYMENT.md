@@ -32,8 +32,11 @@ El frontend solo recibe valores públicos como `VITE_SUPABASE_URL` y `VITE_SUPAB
 
 ## Supabase
 
+- Proyecto: `Cashless Acapulco`, referencia `ypeabqwaragnnavvmgyg`, región `us-east-1`.
+- URL pública: `https://ypeabqwaragnnavvmgyg.supabase.co`.
 - Todo cambio de esquema se origina en una migración versionada.
 - Las tablas expuestas deben tener RLS y políticas probadas.
+- El Data API expone únicamente `api`; `cashless` permanece interno.
 - Antes de aplicar cambios se revisan compatibilidad, impacto y recuperación.
 - Cambios destructivos requieren respaldo y aprobación explícita.
 - El repositorio conserva el esquema reproducible; no se aceptan cambios manuales sin documentar.

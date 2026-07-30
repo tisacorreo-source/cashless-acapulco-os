@@ -1,0 +1,2 @@
+-- Los datos demo se incorporarán en la tarea 4.1.
+-- Este archivo existe para que `supabase db reset` sea reproducible desde ahora.
